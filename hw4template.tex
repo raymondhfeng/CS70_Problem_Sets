@@ -1,0 +1,247 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,setspace,tabto,fancyhdr,sectsty,}
+\usepackage[shortlabels]{enumitem}
+\usepackage[nobreak=true]{mdframed}
+\usepackage[left=1.25in,right=0.75in,top=1.25in,bottom=2.0in]{geometry}
+
+\newcommand*{\Question}[1]{\section{#1}}
+\newenvironment{Parts}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
+\newcommand*{\Part}{\item}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNCOMMENT NEXT LINE FOR SOLUTION BOXES
+% \newcommand*{\solnboxes}{}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Raymond Feng | 3032021864}
+
+%%%%%%%%%%%%%%%%%%%% hw number
+\newcommand*{\hwnum}{4}
+
+
+\ifdefined\solnboxes
+    \newenvironment{Answer}{\vspace{10pt}\begin{mdframed}\textbf{Solution}\\}{\end{mdframed}\vfill\pagebreak[3]}
+\else
+    \newenvironment{Answer}{\vspace{10pt}}{\vfill\pagebreak[3]}
+\fi
+\newcommand*{\MC}[1]{\multicolumn{1}{c}{#1}}
+\newcommand*{\N}{\mathbb{N}}
+\newcommand*{\Z}{\mathbb{Z}}
+\newcommand*{\Q}{\mathbb{Q}}
+\newcommand*{\R}{\mathbb{R}}
+\newcommand*{\C}{\mathbb{C}}
+
+\pagestyle{fancy}
+\headheight=75pt
+\sectionfont{\Large\fontfamily{lmdh}\selectfont}
+
+\renewcommand{\headrulewidth}{6pt}
+\chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
+\lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
+CS 70        \tabto{96pt} Discrete Mathematics and Probability Theory\smallskip\\
+Spring 2017  \tabto{96pt} Rao}
+\rhead{\huge     \fontfamily{lmdh}\selectfont     HW \hwnum}
+
+\lfoot{\small CS 70, Spring 2017, HW \hwnum}
+\begin{document}
+
+\Question{Sundry} 
+\vspace{10pt}
+%%%%%%%%%%%%%%%%%%%% SUNDRY PART HERE
+\begin{mdframed} \textbf{Solution} 
+\item \textit {I, Raymond Feng, certify that all solutions are entirely in my words and that I have not looked at another student's solutions. I have credited all external sources in this write up.}
+\item Sherman Luo email - shermanluo@berkeley.edu
+\item Credit for this LaTex template goes to anonymous CS70 Piazza user.
+\end{mdframed}
+%%%%%%%%%%%%%%%%%%%% END SUNDRY
+\vfill\pagebreak[3]
+
+%%%%%%%%%%%%%%%%%%%% QUESTIONS START HERE
+\Question{Amaze Your Friends}
+\begin{Parts}
+
+\Part You want to trick your friends into thinking you can perform mental arithmetic with very large numbers.
+What are the last digits of the following numbers?
+
+\begin{enumerate}
+
+\item[i.] \quad $11^{2017}$
+\begin{mdframed} \textbf{Solution} \\
+1. $11^{2017}$, the one's place will never change from 1. 
+\end{mdframed}
+
+\item[ii.] \quad $9^{10001}$
+\begin{mdframed} \textbf{Solution} \\
+ii. 9. \\
+$9^2 \equiv 1mod10$ \\
+$((9^2)^5000) \equiv (1^5000)mod10$ \\
+$(9^10000)*9 \equiv 9mod10$ \\
+\end{mdframed}
+
+\item[iii.] \quad $3^{987654321}$
+\begin{mdframed} \textbf{Solution} \\
+iii. 3. \\
+$3^4 \equiv 1mod10$ \\
+$(3^4)^246,913,580 \equiv 3^987,654,320 \equiv 1mod10$ \\
+$3*3^987,654,320 \equiv 3^987,654,321 \equiv 3mod10$ \\
+\end{mdframed}
+\end{enumerate}
+
+\pagebreak 
+
+\Part You know that you can quickly tell a number $n$ is divisible by $9$ if and only if the sum of the digits of $n$ is divisible by $9$. Prove that you can use this trick to quickly calculate if a number is divisible by $9$.
+\begin{mdframed} \textbf{Solution} \\
+The sum of the digits of n. Write n like: \\
+$n=a_0(10^0)+a_1(10^1)+a_2(10^2)+a_3(10^3)+...+a_k(10^k)$ \\
+Because addition is valid in modular arithmetic: \\
+$nmod9 \equiv a_0(10^0)mod9+a_1(10^1)mod9+...+a_k(10^k)mod9$ \\
+$nmod9 \equiv (a_0+9a_0)mod9+(a_1+9a_1)mod9+...+(a_k(10^k-1)+a_k)mod9$ \\
+Because for any integer k, $9kmod9 \equiv 0$: \\
+$nmod9 \equiv (a_0)mod9+(a_1)mod9+...+(a_k)mod9$ \\
+\textbf{If direction:} If the sum of the digits of n are divisible by 9, then n is divisible by 9. \\
+Assuming that the sum of the digits of n are divisible by 9, then because the sum of the digits modulo 9 is the same as adding the modulo 9 of all the numbers individually, and then summing them back together, then the RHS of the above equation must be 0. So $nmod9 \equiv 0$. This is enough to conclud that n is divisible by 9. \\
+\textbf{Only if direction:} If n is divisible by 9, then the sum of the digits of n are divisible by 9. \\
+Assuming that n is divisible by 9, then $nmod9=0$, and so RHS would also have to add up to 0. The modulo operator can only return non-negative values, then that means everything on the RHS would have to be 0. This implies that all the digits of n are divisible by 9. \\
+\end{mdframed}
+
+\end{Parts}
+
+\pagebreak 
+
+\Question{Euclid's Algorithm}
+\begin{Parts}
+\Part Use Euclid's algorithm in the lecture note to compute the greatest common divisor of 527 and 323. List the values of $x$ and $y$ of all recursive calls.
+\begin{mdframed} \textbf{Solution} \\
+\textbf{GCD(527,323)} \\
+$=GCD(323, 527mod323 \equiv 204)$ \\
+$=GCD(323, 204)$ \\
+$=GCD(204, 323mod204 \equiv 119)$ \\
+$=GCD(204, 119)$ \\
+$=GCD(119, 204mod119 \equiv 85)$ \\
+$=GCD(119, 85)$ \\
+$=GCD(85, 119mod85 \equiv 34)$ \\
+$=GCD(85, 34)$ \\
+$=GCD(34, 85mod34 \equiv 17)$ \\
+$=GCD(34, 17)$ \\
+$=GCD(17, 34mod17 \equiv 0)$ \\
+$=GCD(17,0)$ \\
+$GCD(527, 323)=17$
+\end{mdframed}
+
+\Part Use the extended Euclid's algorithm in the lecture note to compute the multiplicative inverse of 5 mod 27. List the values of $x$ and $y$ and the returned values of all recursive calls.
+\begin{mdframed} \textbf{Solution} \\
+\textbf{GCD(527,323)} \\
+\textbf{$EGCD(27,5)$} \\
+$=EGCD(5, 27mod5 \equiv 2) (2 \equiv 27mod5 \equiv 27-5*5)$ \\
+$=EGCD(2, 5mod2 \equiv 1) (1 \equiv 5mod2 \equiv 5-2*2)$ \\
+$=EGCD(1, 2mod1 \equiv 0) (0 \equiv 2mod1 \equiv 2-2*1)$ \\
+Building back up: \\
+$1=1*1+0*0=1*1+2-2*1$ \\
+$=2-1*1=2-1(5-2*2)$ \\
+$=3*2-5=3*(27-5*5)-5$ \\
+$=3*27-16*5$
+$5^{-1}mod27 \equiv -16 \equiv 11$ 
+\end{mdframed}
+
+\pagebreak
+
+\Part Find $x$ (mod $27$) if $5x+26\equiv 3$ mod $27$. You can use the result computed in (b).
+\begin{mdframed} \textbf{Solution} \\
+\textbf{GCD(527,323)} \\
+\textbf{$5x+26 \equiv 3mod27$} \\
+$5x \equiv -23mod27$ \\
+$5x \equiv 4mod27$ \\
+$(5^){-1}5x \equiv 5^{-1}4mod27$ \\
+$(11)5x \equiv (11)4mod27$ \\
+$x \equiv 44mod27$ \\
+$x \equiv 17mod27$
+\end{mdframed}
+
+\Part True or false? Assume $a$, $b$, and $c$ are integers and $c>0$. If $a$ has no multiplicative inverse mod $c$, then $ax \equiv b$ mod $c$ has no solution. Explain your answer.
+\begin{mdframed} \textbf{Solution} \\
+\textbf{GCD(527,323)} \\
+\textbf{Claim: Assume a, b, and c are integers $c>0$. If a has no multiplicative inverse mod c, then $ax \equiv bmodc$ has no solution.}\\
+False. Consider the counterexample $5x \equiv 10mod30$. 5 has no multiplicative inverse mod 30, but there are five unique solutions for x. $x=2,8,14,20,26$. To conclude, a having no multiplicative inverse mod c only makes a statement about the congruence $ax \equiv 1modc$, but not necessarily any other value of b. 
+\end{mdframed}
+\end{Parts}
+
+\pagebreak 
+
+\Question{Solution for $ax \equiv b \bmod m$}
+
+In the lecture notes, we proved that when $\gcd(m, a) = 1$, $a$ has a unique multiplicative inverse, or equivalently $ax \equiv 1\bmod m$ has exactly one solution $x$ (modulo $m$). The proof of the unique multiplicative inverse (theorem 5.2) actually proved that when $\gcd(m, a) = 1$, the solution of $ax \equiv b\bmod m$ with unknown variable $x$ is unique. Now let's consider the case where $\gcd(m, a)>1$ and see why there is no unique solution in this case. Let's consider the general solution of $ax \equiv b\bmod m$ with $\gcd(m, a)>1$.
+\begin{Parts}
+  
+  \Part Let $\gcd(m, a) = d$. Prove that $ax \equiv b\bmod m$ has a solution (that is, there exists an $x$ that satisfies this equation) if and only if $b\equiv0\bmod d$.
+  \begin{mdframed} \textbf{Solution} \\
+\textbf{Claim: Let gcd(m,a)=d. Prove that $ax \equiv bmodm$ has a solution if and only if $b \equiv 0modd$.} \\
+Because $gcd(m,a)=d$, we can write $a=hd, m=id$ for two integers i and h. 
+\textbf{If direction: }If $b \equiv 0modd$, then $ax \equiv bmodm$ has a solution. Assume that $b \equiv 0modd$. Then $b=jd$ for some integer j. Then, $ax \equiv bmodm$ can be changed to $ax=b+km$ for some integer k. Then, $hdx=jd+kid$. Simplifying gives $hx=j+ki$. Changing the equation back into mod form gives $hx \equiv jmodi$. Because h and i are coprime by the definition gcd, then h must have a multiplicative inverse mod i. Then, there must be a value of x where the above equation is satisfied. \\
+\textbf{Only if direction: }If $ax \equiv bmodm$ has a solution, then $b \equiv 0modd$. Assume that $ax \equiv bmodm$ has a solution. That means that $ax=b+km$ for some integer k. Substituting in, we get $hdx=b+kid$, and then $(hdx-b)/id=k$. However, if it is not the case that $b \equiv 0modd$, k cannot be an integer. This is because a multiple of d minus a non multiple of d can no longer be a multiple of d. And thus there is no way for $(hdx-b)/id$ to be an integer. Thus, it must be the case that $b \equiv 0modd$.
+\end{mdframed}
+
+  \Part Let $\gcd(m, a) = d$. Assume $b \equiv 0\bmod d$. Prove that $ax \equiv b\bmod m$ has exactly $d$ solutions (modulo $m$).
+  \begin{mdframed} \textbf{Solution} \\
+\textbf{Claim: Let gcd(m,a)=d. Assume $b \equiv 0modd$. Then $ax \equiv bmodm$ has exactly d solutions modulo m. } \\
+Because a, b, and m are all divisible by d, divide by d to get $a'x \equiv b'modm'$. Then, because a' and m' are coprime by definition of gcd, there is a unique solution of x for $a'x \equiv b'modm'$. This solution must be in the set $\{0,1,2,3...,m'-1\}$. Because $m'd=m$, there must be d solutions for x in the set $\{0,1,2...,m-1\}$.
+\end{mdframed}
+
+\pagebreak 
+
+  \Part Solve for $x$: $77x \equiv 35 \bmod 42$.
+  \begin{mdframed} \textbf{Solution} \\
+\textbf{$5x+26 \equiv 3mod27$} \\
+\textbf{$77x \equiv 35mod42$}\\
+Divide through by common factor of 7 to get $11x \equiv 5mod6$. $5 \equiv 11^{-1}mod6$, and so $11^{-1}*11x \equiv 5*5mod6 \equiv 1$. Then the solutions for $77x \equiv 35mod42$ must be $\{1,7,13,19,25,31,37\}$.
+\end{mdframed}
+  
+\end{Parts}
+
+
+\Question{Check Digits: ISBN} In this problem, we'll look at a real-world applications of check-digits.
+
+International Standard Book Numbers (ISBNs) are 10-digit codes ($d_1d_2\ldots d_{10}$) which are assigned by the publisher. These 10 digits contain information about the language, the publisher, and the number assigned to the book by the publisher. Additionally, the last digit $d_{10}$ is a ``check digit'' selected so that $\sum_{i=1}^{10} i \cdot d_i \equiv 0 \mod 11$. (\textit{Note that the letter X is used to represent the number 10 in the check digit.})
+
+\begin{Parts}
+  \Part Suppose you have very worn copy of the (recommended) textbook for this class. You want to list it for sale online but you can only read the first nine digits: 0-07-288008-? (the dashes are only there for readability). What is the last digit? Please show your work, even if you actually have a copy of the textbook.
+   \begin{mdframed} \textbf{Solution} \\
+\textbf{$\sum_{i=1}^10 i*d_i \equiv 0mod11$} \\
+$\sum_{i=1}^10 i*d_i=1*0+2*0+3*7+4*2+5*8+6*8+7*0+8*0+9*8+10*d_10$ \\
+$189+10d_10 \equiv 0mod11$ \\
+$10d_10 \equiv -189mod11 \equiv 9mod11$ \\
+$10^{-1}10d_10 \equiv 10^{-1}9mod11$ \\
+$d_10 \equiv 90mod11$ \\
+$d_10 \equiv 90mod11 \equiv 2mod11$ \\
+\end{mdframed}
+  
+  \Part Wikipedia says that you can determine the check digit by computing $\sum_{i=1}^9 i\cdot d_i \mod 11$. Show that Wikipedia's description is equivalent to the above description.
+  \begin{mdframed} \textbf{Solution} \\
+\textbf{$\sum_{i=1}^9 i*d_i mod11$} \\
+Assume that $\sum_{i=1}^10 i*d_i \equiv 0mod11$ \\
+$=\sum_{i=1}^9 i*d_i+10d_10 \equiv 0mod11$ \\
+$=10d_10 \equiv (-)\sum_{i=1}^9 i*d_imod11$ \\
+$=(10^{-1})10d_10 \equiv (-)(10^{-1})\sum_{i=1}^9 i*d_imod11$ \\
+$=d_10 \equiv (-)(10)\sum_{i=1}^9 i*d_imod11$ \\
+Because you know the value of $\sum_{i=1}^9$ mod 9, multiply the value by -10, and that gives you $d_10mod11$.
+\end{mdframed}
+    
+  \Part Prove that changing any single digit of the ISBN will render the ISBN invalid. That is, the check digit allows you to \textit{detect} a single-digit substitution error.
+  \begin{mdframed} \textbf{Solution} \\
+Assume that there is a ISBN number with digit $a_k$ at position k, such that the configuration is valid, and that changing $a_k$ to another value in $\{0,1,2,...10\}$ would keep it equivalent to $0mod11$. However, because k is an integer between 1 and 9, then any change of $a_k$ would change the value of $\sum_{i=1}^10$ by a multiple of k. It must be the case that $k*a_k \equiv k*a'_kmod11$. This means that $k(a_k-a'_k)$ must be divisible by 11. 11 is prime, and neither k nor $(a_k-a'_k)$ are divisible by 11. Thus, there is no value for $a'_k$ that would make the new configuration valid. Any change of digit in an ISBN number must void the check digit. \end{mdframed}
+
+  \Part Can you \textit{switch} any two digits in an ISBN and still have it be a valid ISBN? For example, could 01\underline{2}34\underline{5}678X and 01\underline{5}34\underline{2}678X both be valid ISBNs?
+  \begin{mdframed} \textbf{Solution} \\
+Claim states that if $\sum_{i=1}^10 i*d_i \equiv 0mod11$, then to switch kth and jth digits $d_k, d_j$ would ensure that the ISBN remained a valid pairing. In other words: \\
+$\sum_{i=1}^{j-1} i*d_i + j*d_k + \sum_{i=j+1}^{k-1} i*d_i + k*d_j + \sum_{i=k+1}^10 i*d_i \equiv 0mod11$ \\
+We can assume that if jth and kth were not switched, then the ISBN number is valid. In other words: \\
+$\sum_{i=1}^{j-1} i*d_i + j*d_j + \sum_{i=j+1}^{k-1} i*d_i + k*d_k + \sum_{i=k+1}^10 i*d_i \equiv 0mod11$ \\
+Subtract the second from the first: \\
+$j(d_k-d_j)+k(d_j-d_k) \equiv 0mod11$ \\
+This is not necessarily true. If $d_j=d_k$ then it would be, but in general, the congruence does not necessarily hold. 
+\end{mdframed}
+  
+\end{Parts}
+%%%%%%%%%%%%%%%%%%%% QUESTIONS END HERE
+
+\end{document}

@@ -1,0 +1,265 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,setspace,tabto,fancyhdr,sectsty,}
+\usepackage[shortlabels]{enumitem}
+\usepackage[nobreak=true]{mdframed}
+\usepackage[left=1.25in,right=0.75in,top=1.25in,bottom=2.0in]{geometry}
+
+\newcommand*{\Question}[1]{\section{#1}}
+\newenvironment{Parts}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
+\newcommand*{\Part}{\item}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNCOMMENT NEXT LINE FOR SOLUTION BOXES
+% \newcommand*{\solnboxes}{}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Raymond Feng | 3032021864}
+
+%%%%%%%%%%%%%%%%%%%% hw number
+\newcommand*{\hwnum}{5}
+
+
+\ifdefined\solnboxes
+    \newenvironment{Answer}{\vspace{10pt}\begin{mdframed}\textbf{Solution}\\}{\end{mdframed}\vfill\pagebreak[3]}
+\else
+    \newenvironment{Answer}{\vspace{10pt}}{\vfill\pagebreak[3]}
+\fi
+\newcommand*{\MC}[1]{\multicolumn{1}{c}{#1}}
+\newcommand*{\N}{\mathbb{N}}
+\newcommand*{\Z}{\mathbb{Z}}
+\newcommand*{\Q}{\mathbb{Q}}
+\newcommand*{\R}{\mathbb{R}}
+\newcommand*{\C}{\mathbb{C}}
+
+\pagestyle{fancy}
+\headheight=75pt
+\sectionfont{\Large\fontfamily{lmdh}\selectfont}
+
+\renewcommand{\headrulewidth}{6pt}
+\chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
+\lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
+CS 70        \tabto{96pt} Discrete Mathematics and Probability Theory\smallskip\\
+Spring 2017  \tabto{96pt} Rao}
+\rhead{\huge     \fontfamily{lmdh}\selectfont     HW \hwnum}
+
+\lfoot{\small CS 70, Spring 2017, HW \hwnum}
+\begin{document}
+
+\Question{Sundry} 
+\vspace{10pt}
+%%%%%%%%%%%%%%%%%%%% SUNDRY PART HERE
+\begin{mdframed} \textbf{Solution} 
+\item \textit {I, Raymond Feng, certify that all solutions are entirely in my words and that I have not looked at another student's solutions. I have credited all external sources in this write up.}
+\item Sherman Luo email - shermanluo@berkeley.edu
+\item Credit for this LaTex template goes to anonymous CS70 Piazza user.
+\end{mdframed}
+%%%%%%%%%%%%%%%%%%%% END SUNDRY
+
+%%%%%%%%%%%%%%%%%%%% QUESTIONS START HERE
+\Question{Count and Prove}
+\begin{Parts}
+\Part
+Over 1000 students walked out of class and marched to protest the war. To count the exact number of students protesting, the chief organizer lined the students up in columns of different length. If the students are arranged in columns of 3, 5, and 7, then 2, 3, and 4 people are left out, respectively.  What is the minimum number of students present?  Solve it with Chinese Remainder Theorem. 
+\begin{mdframed} \textbf{Solution} \\
+If the number of students is n, then the scenario can be represented by: \\
+$n \equiv 2mod3, n \equiv 3mod5, n \equiv 4mod7$ \\
+3,5, and 7 are pairwise co-prime, so use CRT to solve for n. \\
+$y_1=(5*7)(35^{-1}mod3)=35*2=70$ \\
+$y_2=(21)(21^{-1}mod5)=21*6=126$ \\
+$y_3=(15)(15^{-1}mod7)=15*8=120$ \\
+$x=2*70+3*126+4*120$ \\
+$=140+378+480$ \\
+$=998mod105$ \\
+But n has to be more than 1000, so: \\
+$n=998+105=1103$
+\end{mdframed}
+
+\Part
+Prove that for $n\geq 1$, if $935 = 5 \times 11 \times 17$ divides $n^{80} -1$, then $5$, $11$, and $17$ do not divide $n$.
+\begin{mdframed} \textbf{Solution} \\
+Assuming that $935 = 5 \times 11 \times 17$ divides $n^{80} -1$, then it must be true that: \\
+$n^{80} \equiv 1mod5, n^{80} \equiv 1mod11, n^{80} \equiv 1mod17$. \\
+For any $(n \equiv 1modk) \Leftrightarrow (n^{80} \equiv 1^{80}modk)$, implying: \\
+$n \equiv 1mod5, n \equiv 1mod11, n \equiv 1mod17$. \\
+Then n cannot be divisible by 5, 11, nor 17. \qed
+\end{mdframed}
+\end{Parts}
+
+
+\Question{RSA Lite} 
+
+Woody misunderstood how to use RSA. 
+So he selected prime $P = 101$ and encryption 
+exponent $e = 67$, and encrypted his message $m$ to get $35 = m^e \bmod P$.
+Unfortunately he forgot his original message $m$
+and only stored the encrypted value $35$. But Carla thinks she 
+can figure out how to recover $m$ from $35 = m^e \bmod P$, with 
+knowledge only of $P$ and $e$. Is she right? 
+Can you help her figure out the message $m$? Show all your work. 
+\begin{mdframed} \textbf{Solution} \\
+Woody incorrectly chose a prime P, as opposed to a product of primes. Thus the message should be recoverable. We have $35=x^{67}mod101$. Analogous to normal RSA, I claim that $d \equiv e^{-1}mod(P-1)$. To show that this is the correct decryption key, I show that $x^{ed} \equiv xmodP$. \\
+$d:=e^{-1}mod(P-1) \Rightarrow ed = 1mod(P-1)$ \\
+$ed = 1 + k(P-1) \Rightarrow x^{ed} = x^{1+k(P-1)} \Rightarrow x^{ed}-x = x^{1+k(P-1)}-x$ \\
+$\Rightarrow x^{ed}-x = x(x^{k(P-1)}-1)$ \\
+Again, to show that $x^{ed} \equiv xmodP$(which would show that our scheme is valid), it suffices to show that $x(x^{k(P-1)}-1)$ is divisible by P. \\
+If $P \mid x$, then we are done. Otherwise, FLT says $x^{P-1} \equiv 1modP$ because P is prime. Implying $x^{k(P-1)} \equiv 1^kmodP$, showing that $d:=e^{-1}mod(P-1)$ is the correct definition of d. \\
+$d=67^{-1}mod100$, so using EGCD: \\
+$gcd(100,67)$ \\
+$=gcd(67,33) (33=100-67)$ \\
+$=gcd(33,1) (1=67-2*33)$ \\
+$=gcd(1,0) (0=33-33*1)$ \\
+$1=1*1+0*0$ \\
+$=1*1+33-33*1=33-32*1$ \\
+$=33-32(67-2*33)=65*33-32*67$ \\
+$=65(100-67)-32*67=65*100-97*67$ \\
+$=1$. This means that $-97 \equiv 67^{-1}mod100 \equiv 3mod100 \equiv d$. \\
+The decryption function is then: $D(x) \equiv x^3modP \Rightarrow D(35) \equiv 35^3mod101 \equiv 51mod101$. \\
+51 was Woody's original message.
+\end{mdframed}
+
+
+\Question{RSA with Three Primes}
+Show how you can modify the RSA encryption method to work with three primes instead of two primes (i.e.\ $N=pqr$ where $p, q, r$ are all prime), and prove the scheme you come up with works in the sense that $D(E(x)) \equiv x \bmod N$.
+\begin{mdframed} \textbf{Solution} \\
+I claim the new scheme with three primes p,q, and r and $N=pqr$ to have encryption function $E(x) \equiv x^emodN$ and decryption function $D(x) \equiv x^dmodN$, where $d:=e^{-1}mod(p-1)(q-1)(r-1)$. Have e relatively prime to $(p-1)(q-1)(r-1)$. To show my scheme works, I claim that $x^{ed}\equiv xmodN$. By definition: \\
+$ed \equiv 1mod(p-1)(q-1)(r-1) \Rightarrow ed=1+k(p-1)(q-1)(r-1)$ \\
+$x^{ed}=x^{1+k(p-1)(q-1)(r-1)} \Rightarrow x^{ed}-x=x^{1+k(p-1)(q-1)(r-1)}-x$ \\
+$=x(x^{k(p-1)(q-1)(r-1)}-1)=x^{ed}-x$ \\ 
+Again, to show that $x^{ed} \equiv xmodN$(which would show that our scheme is valid), it suffices to show that $x(x^{k(p-1)(q-1)(r-1)}-1)=x^{ed}-x$ is divisible by N. \\
+To show that $N \mid x$, we need to show that all $p \mid x, q \mid x, r \mid x$. Lets begin with p. FLT gives us: \\
+$x^{p-1} \equiv 1modp$. \\
+$x^{k(p-i)(q-1)(r-1)} \equiv 1^{k(q-1)(r-1)}modp$ \\
+$\Rightarrow x^{k(p-i)(q-1)(r-1)} \equiv 1modp$ \\
+Use the same approach for q and r. \qed
+\end{mdframed}
+
+
+\Question{Squared RSA}
+
+\begin{Parts}
+  \Part Prove the identity $a^{p(p-1)} \equiv 1 \pmod{p^2}$, where $a$ is relatively prime to $p$ and $p$ is prime.
+\begin{mdframed} \textbf{Solution} \\
+Define a function $f(x) \equiv axmodp^2$, and use the assumption that $gcd(a,p)=1$ and that p is prime. I define the domain and range to be $S:=\{1,2,...,p^2\}$. This is a bijection because the domain and range are the same size, and $x'=x \Rightarrow ax' \equiv axmodp^2 \Rightarrow x \equiv x'modp^2$. Moreover, $gcd(a,p^2)=1$(squaring a prime adds no new factors other than the prime itself, and we know that $a$ and $p$ shares no factors) ensures the existence of $a^{-1}modp^2$. Then, modify the domain and range. $S:=\{1,2,...,p^2\}-\{p,2p,...,p^2\}$. This is valid because once I take away the multiples of $p$ from the domain, they are no longer reachable. Take for example $kp^2+jp$ of arbitrary $k$ and $j$ to be in the domain of $f$. This would map to $jp$, which we removed. However, this is impossible, because $kp^2+jp=p(kp+j)$, and $a$ cannot be p, as we assumed $gcd(a,p^2)=1$, and $x$ cannot be $p$, because all multiples of p were removed from the domain. So modifying the set $S$ by subtracting the multiples of $p$ allows $f$ to remain a bijection, because all elements that mapped to what was subtracted were removed, and all images that preimaged to what was removed was removed as well. Then it follows that $(\prod S) a^{p(p-1)} \equiv (\prod S) mod p^2$. All elements of $S$ have a multiplicative inverse $modp^2$, so $a^{p(p-1) \equiv 1modp^2$. \qed
+\end{mdframed}
+
+  \Part 
+   Now consider the RSA scheme: the public key is $(N = p^2 q^2, e)$ for primes $p$ and $q$, with $e$ relatively prime to $p(p-1)q(q-1)$. The private key is $d = e^{-1} \pmod{p(p-1)q(q-1)}$.
+  Prove that the scheme is correct, i.e.\ $x^{ed} \equiv x \pmod{N}$.
+\begin{mdframed} \textbf{Solution} \\
+I want to show that $x^{ed} \equiv x \pmod{N}$. By definition $ed \equiv 1modp(p-1)q(q-1) \Rightarrow ed=1+kp(p-1)q(q-1) \Rightarrow x^{ed}=x^{1+kp(p-1)q(q-1)} \Rightarrow x^{ed}-x=x^{1+kp(p-1)q(q-1)}-x$. \\
+Then, to show $x^{ed} \equiv x \pmod{N}$, it suffices to show that $N \mid x(x^{kp(p-1)q(q-1)}-1)$. $N=p^2q^2$, so first I will show that $p^2 \mid x(x^{kp(p-1)q(q-1)}-1)$. If $p^2 \mid x$, then we are done. Otherwise, part a says that $x^{p(p-1)} \equiv 1modp^2 \Rightarrow x^{kp(p-1)q(q-1)} \equiv 1^{kq(q-1)}modp^2$. Then, use the same approach for $q^2$, thus showing that $N \mid x(x^{kp(p-1)q(q-1)}-1)$. \qed
+\end{mdframed}
+
+  \Part Continuing the previous part, prove that the scheme is unbreakable, i.e.\ your scheme is at least as difficult as ordinary RSA.
+\begin{mdframed} \textbf{Solution} \\
+I will assume that I have cracked this new scheme, meaning that I know the value of $N:=p(p-1)q(q-1)$. Then I will show that with this information, I can find $(p-1)(q-1)$, showing that this scheme is at least as secure as regular RSA. I also assume that the public keys $N := p^2q^2$ and $N':=pq$ are known. \\
+$k:=p(p-1)q(q-1)=p^2q^2-p^2q-pq^2+pq$ \\
+$k-N-N'=-p^2q-pq^2=-pq(p+q)$ \\
+$(k-N-N')/(-N')=p+q$ \\
+$j:=(k-N-N')/(-N')=p+q$ \\
+$N'=p(j-p)$ \\
+Then finding $p$ and $q$ is a matter of finding the roots of the polynomial $-p^2+pj-N'$. \qed
+\end{mdframed}
+
+\end{Parts}
+
+
+
+\Question{Breaking RSA}
+\begin{Parts}
+    \Part Eve is not convinced she needs to factor $N = pq$ in order to break
+        RSA.
+        She argues: "All I need to know is $(p-1)(q-1)$... then I can find $d$
+    as the inverse of $e$ mod $(p-1)(q-1)$. This should be easier than
+    factoring $N$."
+    Prove Eve wrong, by showing that if she knows $(p-1)(q-1)$,
+  she can easily factor $N$ (thus showing finding $(p-1)(q-1)$ is at least
+  as hard as factoring $N$). Assume Eve has a friend Wolfram, who can easily return the
+    roots of polynomials over $\R$ (this is, in fact, easy).
+\begin{mdframed} \textbf{Solution} \\
+Assume that I know the value $k:=(p-1)(q-1)$ as well as the public key $N=pq$. Then, $(p-1)(q-1)=pq-p-q+1$. Subtract $N+1$ from both sides. $k-N-1=-p-q$. Then, $q=k-N-1+p$, and substitute $q$ into $N=pq$ to get $N=p(k-N-1+p)$. Then, get Wolfram to factor the polynomial $p^2+(k-N-1)p-N$ to find $p$, and then $q=N/p$. Once you know $p$ and $q$, you know $(p-1)(q-1)$. Thus finding $(p-1)(q-1)$ is at least as hard as factoring $N$. \qed
+\end{mdframed}
+
+  \Part When working with RSA, it is not uncommon to use $e=3$ in the public
+        key. Suppose that Alice has sent Bob, Carol, and Dorothy the same
+        message indicating the time she is having her birthday party. Eve, who is
+        not invited, wants to decrypt the message and show up to the
+        party.
+        Bob, Carol, and Dorothy have public keys $(N_1, e_1), (N_2, e_2), (N_3,
+        e_3)$ respectively, where $e_1=e_2=e_3=3$. Furthermore assume that $N_1,N_2,N_3$ are
+        all different. Alice has chosen a number $0\leq x< \min\{N_1,N_2,N_3\}$ which
+        indicates the time her party starts and has encoded it via the three
+        public keys and sent it to her three friends. Eve has been able to
+        obtain the three encoded messages. Prove that Eve can figure out $x$.
+        First solve the problem when two of $N_1,N_2,N_3$ have a
+        common factor. Then solve it when no two of them have a common factor.
+        Again, assume Eve is friends with Wolfram as above.
+        
+        
+    \textit{Hint}: The concept behind this problem is the Chinese Remainder Theorem:
+    Suppose $n_1, ...,n_k$ are positive integers, that are pairwise co-prime.
+    Then, for any given sequence of integers $a_1, ..., a_k$, there exists an
+    integer $x$ solving the following system of simultaneous congruences:
+        \begin{align*}
+            x &\equiv a_1 \pmod{n_1} \\ 
+        x &\equiv a_2 \pmod{n_2} \\ 
+        &\vdots \\ 
+        x &\equiv a_k \pmod{n_k} 
+    \end{align*}
+    Furthermore, all solutions $x$ of the system are congruent modulo 
+    the product, $N=n_1 \dotsm n_k$. Hence:
+        $x \equiv y \pmod{n_i} \text{ for } 1 \leq i \leq k \Leftrightarrow 
+      x \equiv y \pmod N $.
+\begin{mdframed} \textbf{Solution} \\
+I know the messages for: \\
+Bob: $E_1(x) \equiv x^{e_1}modN_1$, Carol: $E_2(x) \equiv x^{e_2}modN_2$, Dorothy: $E_3(x) \equiv x^{e_3}modN_3$. \\
+For the case where two $N_2$ and $N_3$ (for simplicity, but can be any arbitrary two in $\{N_1,N_2,N_3\}$) have a common factor, then the system can be written as: \\
+$E_1(x) \equiv x^{e}modN_1$, $E_2(x) \equiv x^{e}modn_2d$, $E_3(x) \equiv x^{e}modn_3d$. \\
+The $e_1,e_2,e_3$ are all 3, so they were all changed to $e$. And $E_2(x) \equiv x^{e}modn_2d$ implies that $E_2(x) \equiv x^{e}modn_2$ and $E_3(x) \equiv x^{e}modn_3d$ implies that $E_3(x) \equiv x^{e}modn_3$. \\
+The system is now $E_1(x) \equiv x^{e}modN_1$, $E_2(x) \equiv x^{e}modn_2$, $E_3(x) \equiv x^{e}modn_3$. Define $b:=x^e$, and the system becomes: $b \equiv E_1(x)modN_1$, $b \equiv E_2(x)modn_2$, $b \equiv E_3(x)modn_3$, and because $N_1, n_2, n_3$ are co-prime, then CRT says that the system has a unique solution for $b$. Which can be constructed as such: 
+$y_1=(n_2*n_3)((n_2*n_3)^{-1}modN_1), y_2=(N_1*n_3)((N_1*n_3)^{-1}modn_2), y_3=(N_1*n_2)((N_1*n_2)^{-1}modn_3)$ and $b \equiv (E_1(x)*y_1+E_2(x)*y_2+E_3(x)*y_3)(mod N_1*n_2*n_3)$. \\ \\
+For the case where no two of $N_1,N_2,N_3$ share a common factor, then we know that they are pairwise co-prime, and have the system: $b \equiv E_1(x)modN_1$, $b \equiv E_2(x)modN_2$, $b \equiv E_3(x)modN_3$, which can be solved in a similar way, with $y_1=(N_2*N_3)((N_2*N_3)^{-1}modN_1), y_2=(N_1*N_3)((N_1*N_3)^{-1}modN_2), y_3=(N_1*N_2)((N_1*N_2)^{-1}modN_3)$ and $b \equiv (E_1(x)*y_1+E_2(x)*y_2+E_3(x)*y_3)(mod N_1*N_2*N_3)$. \\ 
+With $b$ unique, as guaranteed by CRT. 
+
+In both of these cases, we have found a unique value for $b=x^e$ and because $x<N_1,N_2,N_3 \Rightarrow x^3<N_1*N_2*N_3$. So then it is valid to say that taking the cube root of $b$ will result in the correct message $x \mod N_1*N_2*N_3$. \qed
+\end{mdframed}
+
+\end{Parts}
+
+
+
+
+
+\Question{Polynomials in Fields}
+ Define the sequence of polynomials by $P_0(x) = x+12$, $P_1(x) = x^2 - 5x + 5$ and $P_n(x) = x P_{n-2}(x) - P_{n-1}(x)$.
+  
+  (For instance, $P_2(x) = 17x-5$ and $P_3(x) = x^3 - 5x^2 - 12x + 5$.)
+  \begin{Parts}
+  \Part Show that $P_n(7) \equiv 0 \pmod{19}$ for every $n\in \N$.
+\begin{mdframed} \textbf{Solution} \\
+Proceed by strong induction on $n$: \\
+Base case: For $n=0, P_0(7)=19 \equiv 0mod19$, and for $n=1, P_1(7)=49-35+5=19 \equiv 0mod19$. \\
+Inductive hypothesis: For all $0 \leq n \leq k, P_n(7) \equiv 0mod19$. \\
+Inductive step: To show that $P_{k+1}(7) \equiv 0mod19$, observe that $P_{k+1}(7)=x*P_{k-1}(7)+P_k(7)$. By the inductive hypothesis, we know that $P_{k-1}(7) \equiv 0mod19, P_k(7) \equiv 0mod19$. Furthermore $x*P_{k-1}(7) \equiv 0*xmod19 \equiv 0mod19$, and so the sum of the two expressions must be equivalent to zero modulo 19. \qed
+\end{mdframed}
+  
+  \Part Show that, for every prime $q$, if $P_{2017}(x) \not\equiv 0 \pmod{q}$, then $P_{2017}(x)$ has at most 2017 roots modulo $q$.\\
+\begin{mdframed} \textbf{Solution} \\
+Claim: For all $n \geq 2$, $P_n(x)$ is at most degree $n$. \\
+Proceed by strong induction on n. \\
+Base case: For $n=2$ and $n=3$, $P_2(x)=17x-5$ and $P_3(x)=x^3-5x^2-12x+5$. \\
+Inductive hypothesis: For $0 \leq n \leq k, P_n(x)$ has degree at most $n$. \\
+Inductive Step: Consider $P_{k+1}(x)=P_{k-1}(x)+P_{k}(x)$. We know from the inductive hypothesis that $P_{k-1}(x)$ has at most degree $k-1$, and $P_k(x)$ has at most degree $k$, so their sum must be of degree at most $k$. \qed \\
+So we know from the above proof that $P_{2017}(x)$ has degree at most 2017. Because we are effectively working over GF(q), then from the notes we know property 1 applies. e.g. $P_{2017}(x)$ has at most 2017 roots modulo q. 
+
+\textbf{My old answer, before I was enlightened by the Piazza gods:} \\
+Note 8 says: "So both property 1 and property 2 hold if the coefficients and the variable x are restricted to take on values modulo [prime] m." \\
+Property 1 says: "A non-zero polynomial of degree d has at most d roots." \\
+It is not guaranteed that $P_{2017}(x)$ only takes on coefficient values modulo $q$, but because we are working modulo $q$, then it is valid to subtract multiples of $q$ from each coefficient, as that would not change the value of $P_{2017}(x)modq$. Furthermore, because we are working modulo $q$, it can be assumed that $x \in \{0,1,...p-1\}$. Now that we have modified $P_{2017}(X)$ to only take on coefficient values modulo $q$, the text from note 8 applies, and it is shown that $P_{2017}(x)$ has at most 2017 zeros. Moreover, $P_{2017}(x) \not \equiv 0modq$ ensures that there are not $q-1$ zeroes, which would be the case if $P_{2017}(x) \equiv 0modq$ 
+\end{mdframed}
+  \end{Parts}
+
+%%%%%%%%%%%%%%%%%%%% QUESTIONS END HERE
+
+\end{document}

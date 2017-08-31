@@ -1,0 +1,264 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,setspace,tabto,fancyhdr,sectsty,graphicx}
+\usepackage[shortlabels]{enumitem}
+\usepackage[nobreak=true]{mdframed}
+\usepackage[left=1.25in,right=0.75in,top=1.25in,bottom=2.0in]{geometry}
+
+\newcommand*{\Question}[1]{\section{#1}}
+\newenvironment{Parts}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
+\newcommand*{\Part}{\item}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNCOMMENT NEXT LINE FOR SOLUTION BOXES
+% \newcommand*{\solnboxes}{}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Raymond Feng | 3032021864}
+
+%%%%%%%%%%%%%%%%%%%% hw number
+\newcommand*{\hwnum}{6}
+
+
+\ifdefined\solnboxes
+    \newenvironment{Answer}{\vspace{10pt}\begin{mdframed}\textbf{Solution}\\}{\end{mdframed}\vfill\pagebreak[3]}
+\else
+    \newenvironment{Answer}{\vspace{10pt}}{\vfill\pagebreak[3]}
+\fi
+\newcommand*{\MC}[1]{\multicolumn{1}{c}{#1}}
+\newcommand*{\N}{\mathbb{N}}
+\newcommand*{\Z}{\mathbb{Z}}
+\newcommand*{\Q}{\mathbb{Q}}
+\newcommand*{\R}{\mathbb{R}}
+\newcommand*{\C}{\mathbb{C}}
+\newcommand*{\GF}{\text{GF}}
+
+\pagestyle{fancy}
+\headheight=75pt
+\sectionfont{\Large\fontfamily{lmdh}\selectfont}
+
+\renewcommand{\headrulewidth}{6pt}
+\chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
+\lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
+CS 70        \tabto{96pt} Discrete Mathematics and Probability Theory\smallskip\\
+Spring 2017  \tabto{96pt} Rao}
+\rhead{\huge     \fontfamily{lmdh}\selectfont     HW \hwnum}
+
+\lfoot{\small CS 70, Spring 2017, HW \hwnum}
+\begin{document}
+
+\Question{Sundry} 
+\vspace{10pt}
+%%%%%%%%%%%%%%%%%%%% SUNDRY PART HERE
+\begin{mdframed} \textbf{Solution} 
+\item \textit {I, Raymond Feng, certify that all solutions are entirely in my words and that I have not looked at another student's solutions. I have credited all external sources in this write up.}
+\item Sherman Luo email - shermanluo@berkeley.edu
+\item Credit for this LaTex template goes to anonymous CS70 Piazza user.
+\end{mdframed}
+%%%%%%%%%%%%%%%%%%%% END SUNDRY
+\vfill\pagebreak[3]
+
+%%%%%%%%%%%%%%%%%%%% QUESTIONS START HERE
+\Question{Error-Correcting Codes}
+
+\begin{Parts}
+\renewcommand{\labelenumi}{(\alph{enumi})}
+    \Part
+    Recall from class the error-correcting code for erasure errors, which
+    protects against up to $k$ lost packets by sending a total of $n+k$ packets
+    (where $n$ is the number of packets in the original message).  Often the number
+    of packets lost is not some fixed number $k$, but rather a \emph{fraction} of
+    the number of packets sent.  Suppose we wish to protect against a fraction
+    $\alpha$ of lost packets (where $0 < \alpha < 1$).  At least how many packets do 
+    we need to send (as a function of $n$ and $\alpha$)?
+\begin{mdframed} \textbf{Solution} \\
+Suppose in this new scheme we have to add $x$ additional packets. Then, the number of total packets is $n+x$. Then we know that the number of dropped packets will be $\alpha(n+x)$. The sent packets minus the lost packets must be $n$. Then we have the equation $(n+x)-(n+x)\alpha=n$. Solving for $x$, we have: \\
+$n+x-n\alpha-x\alpha=n$ \\
+$x-x\alpha=n-n+n\alpha$ \\
+$x(1-\alpha)=n\alpha$ \\
+$x=n\alpha / (1-\alpha)$ \\
+Then, the total number of points sent is $n+x=n+(n\alpha/(1-\alpha))=n/(1-\alpha)$.
+\end{mdframed}
+
+    \Part
+    Repeat part (a) for the case of general errors.
+\begin{mdframed} \textbf{Solution} \\
+Suppose in this new scheme we have to add $x$ additional packets. Then, the number of total packets is $n+x$. Then we know that the number of dropped packets will be $\alpha(n+x)$. The sent packets minus two times the lost packets must be $n$. This is because in general errors, there must be twice the number of lost packets added to the message size. Then we have the equation $(n+x)-2(n+x)\alpha=n$. Solving for $x$, we have: \\
+$n+x-2n\alpha-2x\alpha=n$ \\
+$x-2x\alpha=n-n+2n\alpha$ \\
+$x(1-2\alpha)=2n\alpha$ \\
+$x=2n\alpha / (1-2\alpha)$ \\
+Then, the total amount of points sent is $x+n=n+(2n\alpha / (1-2\alpha))=n/(1-2\alpha)$.
+\end{mdframed}
+\end{Parts}
+
+\Question{Polynomials in One Indeterminate}
+
+We will now prove a fundamental result about polynomials: every non-zero
+polynomial of degree $n$ (over a field $F$) has at most $n$ roots. If
+you don't know what a field is, you can assume in the following that
+$F = \mathbb{R}$ (the real numbers).
+\begin{Parts}
+    \Part Show that for any $\alpha \in F$, there exists some polynomial $Q(x)$
+    of degree $n-1$ and some $b \in F$ such that $P(x) = (x-\alpha)Q(x) + b$.
+\begin{mdframed} \textbf{Solution} \\
+I assume that my polynomial $P(x)$ is defined over all real $x$ values. Thus, $P(\alpha)$ must be some real number. Then, I define $b:=P(\alpha)$, and so $P(\alpha)-b=0$. I use part b and say that because $\alpha$ is a root of $P(\alpha)-b$, then there must exist a $Q(x)$ such that $P(x)-b=(x-\alpha)Q(x)$. It then immediately follows that $P(x)=(x-\alpha)Q(x)$. \qed
+\end{mdframed}
+
+    \Part Show that if $\alpha$ is a root of $P(x)$, then $P(x) =
+    (x-\alpha)Q(x)$.
+\begin{mdframed} \textbf{Solution} \\
+Proceed by contraposition. If there does not exist a $Q(x)$ such that $P(x)=(x-\alpha)Q(x)$, then $\alpha$ is not a root of $P(x)$. If $Q(x)$ does not exist, then it must follow that $(x-\alpha)$ is not a factor of $P(x)$. Then, all the existing factors of $P(x)$ do not evaluate to zero when given $\alpha$. Then, by the definition of root, $\alpha$ is not a root of $P(x)$. \qed
+\end{mdframed}
+
+    \Part Prove that any polynomial of degree $1$ has at most one
+    root. This is your base case.
+\begin{mdframed} \textbf{Solution} \\
+Proof by contraposition. If a polynomial has greater than one root, then the polynomial is not degree 1. From part b, we know that any root $\alpha$ of $P(x)$ must contribute a factor of $(x-\alpha)$ to $P(x)$. Thus, because our assumption says that the minimum degree is two, then the minimum degree polynomial we can have is two. $2 \neq 1$. \qed
+\end{mdframed}
+
+    \Part Now prove the inductive step: if every polynomial of degree
+    $n-1$ has at most $n-1$ roots, then any polynomial of degree $n$ has
+    at most $n$ roots.
+\begin{mdframed} \textbf{Solution} \\
+From part a, every degree n polynomial $P(x)$ can be written as $P(x)=(x-\alpha)Q(x)$ so long as $\alpha$ is a root, with $Q(x)$ having $n-1$ roots. We know that $Q(x)$ can have at most $n-1$ roots. If $b$ happens to be 0, then the $(x-\alpha)$ factor adds a root by the result from part b, resulting in $n$ roots. Otherwise, when $b$ is not zero, then $P(x)$ does not have root $\alpha$, and must have less than n roots. \qed 
+\end{mdframed}
+\end{Parts}
+
+
+\Question{Properties of $\GF(p)$}
+
+\begin{Parts}
+    \Part Show that, if $p(x)$ and $q(x)$ are polynomials over the
+    reals (or complex, or rationals) and $p(x)\cdot q(x) = 0$ for all
+    $x$, then either $p(x)=0$ for all $x$ or $q(x)=0$ for all $x$ or both.
+    (\textit{Hint}: You may want to prove first this lemma, true in all fields:
+    The roots of $p(x)\cdot q(x)$ is the union of the roots of $p(x)$ and $q(x)$.)
+\begin{mdframed} \textbf{Solution} \\
+Lemma: The roots of $p(x)q(x)$ is the union of the roots of $p(x)$ and $q(x)$. \\
+Proof: The lemma is saying that if $\alpha$ is a root of $p(x)q(x)$, then it must be a root of either $p(x)$, $q(x)$, or both. Proceed by contraposition. If $\alpha$ is not a root of either $p(x)$ or $q(x)$, then it cannot be a root of $p(x)q(x)$. This is true because $(p(\alpha) \neq 0) \land (q(\alpha) \neq 0) \Rightarrow p(\alpha)q(\alpha) \neq 0)$. \\  
+Proof of claim: Proceed by contraposition. $(p(x) \neq 0 \land q(x) \neq 0) \Rightarrow p(x)q(x) \neq 0$ over all the reals. This follows from the lemma because the set of roots of $p(x)$ and $q(x)$ is $\emptyset$, and $\emptyset \cup \emptyset = \emptyset$. Suggesting that the set of roots for $p(x)q(x)$ is $\emptyset$. Then, it follows that $p(x)q(x)$ has no roots over the reals. \qed
+\end{mdframed}
+
+    \Part Show that the claim in part (a) is false for finite fields $\GF(p)$. 
+\begin{mdframed} \textbf{Solution} \\
+Proceed by contradiction: Take $GF(5)$, and define $p(x) = (x)(x+1)(x+2)(x+3)(x+4), q(x) = 1$ neither of which are the zero polynomial, but their product $p(x)q(x)$ is zero over the entire field $GF(5)$. 
+\end{mdframed}
+\end{Parts}
+
+
+\Question{Poker Mathematics}   
+
+A \emph{pseudo-random number generator} is a way of generating a large quantity of random-looking numbers, if all we have is a little bit of randomness (known as the \emph{seed}). One simple scheme is the \emph{linear congruential generator}, where we pick some modulus $m$, some constants $a,b$, and a seed $x_0$, and then generate the sequence of outputs $x_0,x_1,x_2,x_3,\dots$ according to the following equation:
+\[ 
+x_{t+1} = ax_t + b \pmod m
+\]
+(Notice that $0 \le x_t < m$ holds for every $t$.)
+
+You've discovered that a popular web site uses a linear congruential generator to generate poker hands for its players.  For instance, it uses $x_0$ to pseudo-randomly pick the first card to go into your hand, $x_1$ to pseudo-randomly pick the second card to go into your hand, and so on. For extra security, the poker site has kept the parameters $a$ and $b$ secret, but you do know that the modulus is $m=2^{31}-1$ (which is prime).
+
+Suppose that you can observe the values $x_0$, $x_1$, $x_2$, $x_3$, and $x_4$ from the information available to you, and that the values $x_5,\dots,x_9$ will be used to pseudo-randomly pick the cards for the next person's hand. Describe how to efficiently predict the values $x_5,\dots,x_9$, given the values known to you.
+\begin{mdframed} \textbf{Solution} \\
+We have: \\
+$x_1 \equiv (ax_0+b) \mod m$ and $x_2 \equiv (ax_1+b) \mod m$. Subtract the second from the first to get $(x_1-x_2) \equiv a(x_0-x_1) \mod m$. Multiply both sides by multiplicative inverse: $a \equiv (x_0-x_1)^{-1}(x_1-x_2) \mod m$. Then knowing the value of $a$, solve for $b$. $b \equiv (x_1-ax_0) \mod m$. Knowing the values of $a$ and $b$, as well as $\{x_0,x_1,x_2,x_3,x_4\}$, it is straightforward to find $x_5...x_9$.
+\end{mdframed}
+
+
+\Question{Secret Sharing with Spies}
+
+An officer stored an important letter in her safe. In case she is
+killed in battle, she decides to share the password (which is a number)
+with her troops. However, everyone knows that there are 3 spies among
+the troops, but no one knows who they are except for the three spies
+themselves. The 3 spies can coordinate with each other and they will
+either lie and make people not able to open the safe, or will open the
+safe themselves if they can. Therefore, the officer would like a
+scheme to share the password that satisfies the following conditions:
+\begin{itemize}
+  \item When $M$ of them get together, they are guaranteed to be
+          able to open the safe even if they have spies among them.
+  \item The 3 spies must not be able to open the safe all by themselves.
+\end{itemize}
+
+Please help the officer to design a scheme to share her password. What
+is the scheme? What is the smallest $M$? Show your work and argue why
+your scheme works and any smaller $M$ couldn't work.
+\begin{mdframed} \textbf{Solution} \\
+10. Use a polynomial of degree $d$ to encode the message, with the message being the $y$ intercept of the polynomial. The only way to decipher the message would be to get $d+1$ points that lie on the polynomial. The degree must be at least 3, other wise the three spies themselves could crack the safe with their three keys. However, there must also be protection from the spies lying. If all three spies lie, then that is equivalent to three general errors, and there must be six extra packets sent in order to account for that. Then, $M=10$. If $M=9$, then if all three spies lied, there would not be enough keys as $n+2k$ are required.  
+\end{mdframed}
+
+\Question{Berlekamp-Welch Algorithm}
+
+In this question we will go through an example of error-correcting codes with
+general errors.  We will send a message $(m_0,m_1,m_2)$ of length $n = 3$.
+We will use an error-correcting code for $k = 1$ general error, doing
+arithmetic modulo $5$.
+
+\begin{Parts}
+    \renewcommand{\labelenumi}{(\alph{enumi})}
+    \Part Suppose $(m_0,m_1,m_2) = (4,3,2)$.  Use Lagrange interpolation to
+    construct a polynomial $P(x)$ of degree $2$ (remember all arithmetic is $\bmod
+    5$) so that $(P(0),P(1),P(2)) = (m_0,m_1,m_2)$.  Then extend the message to
+    length $n+2k$ by appending $P(3),P(4)$.  What is the polynomial $P(x)$ and
+    what is the message $(c_0,c_1,c_2,c_3,c_4) = (P(0),P(1),P(2),P(3),P(4))$ that
+    is sent?
+\begin{mdframed} \textbf{Solution} \\
+$\Delta_0(x)=(x-1)(x-2)/2, \Delta_1(x)=x(x-2)\-1, \Delta_2(x)=x(x-1)/2$ \\
+$P(x)=\Delta_0(x)+\Delta_1(x)+\Delta_2(x)$ \\
+$=(2)(x-1)(x-2)+(-3)x(x-2)+x(x-1)$ \\
+$=2(x^2-3x+2)+(-3)(x^2-2x)+x^2-x$ \\
+$=2x^2-6x+4-3x^2+6x+x^2-x$ \\
+$=-x+4$ \\
+$(c_0,c_1,c_2,c_3,c_4) = (4,3,2,1,0)$
+\end{mdframed}
+
+    \Part Suppose the message is corrupted by changing $c_0$ to $0$.  We will
+    locate the error using the Berlekamp-Welch method.  Let $E(x) = x + b_0$ be
+    the error-locator polynomial, and $Q(x) = P(x)E(x) = a_3x^3 + a_2x^2 + a_1x +
+    a_0$ be a polynomial with unknown coefficients.  Write down the system of
+    linear equations (involving unknowns $a_0,a_1,a_2,a_3,b_0$) in the
+    Berlekamp-Welch method.  You need not solve the equations.
+\begin{mdframed} \textbf{Solution} \\
+$(0,3,2,1,0)$ is the message sent. \\
+$a_0=0(0+b_0)$ \\
+$a_3+a_2+a_1+a_0=3(1+b_0)$ \\
+$8a_3+4a_2+2a_2+a_0=2(2+b_0)$ \\
+$27a_3+9a_2+3a_1+a_0=1(3+b_0)$ \\
+$64a_3+16a_2+4a_1+a_0=0(4+b_0)$ 
+\end{mdframed}
+
+    \Part The solution to the equations in part (b) is $b_0 = 0, a_0 = 0, a_1 = 4,
+    a_2 = 4, a_3 = 0$.  Show how the recipient can recover the original message
+    $(m_0,m_1,m_2)$.
+\begin{mdframed} \textbf{Solution} \\
+$Q(x)=4x^2+4x, E(x)=x, P(x)=Q(x)/E(x)=4x+4$ \\
+Becuase now we know that $c_0$ was the error, $P(0)=4$. \\
+$(m_0,m_1,m_2)=(4,3,2)$
+\end{mdframed}
+\end{Parts}
+
+
+
+\Question{Countability Introduction}
+
+\begin{Parts}
+    \Part Do $(0, 1)$ and $\R_+ = (0, \infty)$ have the same cardinality? If so, give an explicit bijection (and prove that it's a bijection). If not, then prove that they have different cardinalities.
+\begin{mdframed} \textbf{Solution} \\
+Yes. First, define a mapping $f$ from $(0,1)$ to $(0,\pi/2)$ by multiplying each element by $\pi/2$. $f(x)=x\pi/2$. Suppose $f(x)=f(y)$, then this means that $(x\pi/2)=(y\pi/2)$, which implies $x=y$. $f$ is one to one. Also, if $y \in (0,\pi/2)$, then, $f(2y/\pi)=y$, so f is onto. \\
+Then define a mapping $g$ from $(0,\pi/2)$ to $(0,\infty)$ by $g(x)=tan(x)$. If $g(x)=g(y)$, then $tan(x)=tan(y)$. Because $g$ is restricted to the domain $(0,1)$, this implies $x=y$. So $g$ is one to one. Also, if $y \in (0,\infty)$, then $tan(arctan(y))=y$. So $g$ is onto. Defining these two bijections is sufficient to claim a bijection $f(g)$, which maps $(0,1) \rightarrow (0,\infty)$. \qed
+\end{mdframed}
+
+    \Part Is the set of English strings countable? (Note that the strings may be arbitrarily long, but each string has finite length.) If so, then provide a method for enumerating the strings. If not, then use a diagonalization argument to show that the set is uncountable.
+\begin{mdframed} \textbf{Solution} \\
+Define a mapping $f$ from all English strings to ternary bit strings, using 2 to seperate the words. Then, because all the strings are of finite length, then the ternary bit strings must also be finite. Because a finite ternary bit stream can be viewed as a natural number, the set of ternary bit string representations of English strings must be a subset of the natural numbers, so they must be infinitely countable. \qed
+\end{mdframed}
+
+    \Part Consider the previous part, except now the strings are drawn from a countably infinite alphabet $\mathcal{A}$. Does your answer from before change? Make sure to justify your answer.
+\begin{mdframed} \textbf{Solution} \\
+Similar to the polynomial example from the notes, there is an injection from strings drawn from an infinite alphabet to ternary bit strings. This, this set must also be infinitely countable. \qed
+\end{mdframed}
+\end{Parts}
+
+%%%%%%%%%%%%%%%%%%%% QUESTIONS END HERE
+
+\end{document}

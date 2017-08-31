@@ -1,0 +1,445 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,enumerate,setspace,tabto,fancyhdr}
+\usepackage[shortlabels]{enumitem}
+\usepackage[nobreak=true]{mdframed}
+\usepackage[left=1.25in,right=0.75in,top=1.25in,bottom=2.0in]{geometry}
+\usepackage{sectsty}
+
+\newcommand*{\Question}[1]{\vfill\pagebreak[3]\section{#1}}
+\newenvironment{Parts}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
+\newcommand*{\Part}{\item}
+\newenvironment{Answer}{\vspace{20pt}}{\vspace{20pt}}
+\newcommand*{\MC}[1]{\multicolumn{1}{c}{#1}}
+\newcommand*{\N}{\mathbb{N}}
+\newcommand*{\Z}{\mathbb{Z}}
+\newcommand*{\Q}{\mathbb{Q}}
+\newcommand*{\C}{\mathbb{C}}
+
+\pagestyle{fancy}
+\headheight=75pt
+\sectionfont{\Large\fontfamily{lmdh}\selectfont}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Raymond Feng | 3032021864}
+
+%%%%%%%%%%%%%%%%%%%% hw number
+\newcommand*{\hwnum}{1}
+
+\renewcommand{\headrulewidth}{6pt}
+\chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
+\lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
+CS 70        \tabto{96pt} Discrete Mathematics and Probability Theory\smallskip\\
+Spring 2017  \tabto{96pt} Satish Rao}
+\rhead{\huge     \fontfamily{lmdh}\selectfont     HW \hwnum}
+
+\lfoot{\small CS 70, Spring 2017, HW \hwnum}
+\begin{document}
+
+\section{Sundry} 
+%%%%%%%%%%%%%%%%%%%% SUNDRY PART HERE
+\begin{mdframed} \textbf{Solution} 
+\item \textit {I, Raymond Feng, certify that all solutions are entirely in my words and that I have not looked at another student's solutions. I have credited all external sources in this write up.}
+\item Sherman Luo - shermanluo@berkeley.edu
+\item Sinho Chewi's proof for distributing quantifiers: \\
+$https://drive.google.com/file/d/0B_WFOD8f4jS5aFU1ZGowVlk4Nmc/view$ 
+\item CSM tutor Charlie Tian, for explaining images and preimages.
+\item Credit for this LaTex template goes to anonymous CS70 Piazza user.
+\end{mdframed}
+\clearpage
+%%%%%%%%%%%%%%%%%%%% END SUNDRY
+
+%%%%%%%%%%%%%%%%%%%% QUESTIONS START HERE
+
+\Question{Short Answer: Logic}
+
+\begin{enumerate}
+\item
+Let the statement, $(\forall x \in R, \exists y \in R) \  G(x,y)$, be
+true for predicate $G(x,y)$ and $R$ being the real numbers. 
+
+Which of the following statements is certainly true, certainly false, or possibly true. 
+
+\begin{enumerate}
+
+\item
+$G(3,4)$
+
+\item
+$(\forall x \in R) G(x,3)$
+
+\item
+$(\exists y) G(3,y)$
+
+\item
+$(\forall y) \neg G(3,y)$
+
+\item
+$(\exists x) G(x,4)$
+
+\end{enumerate}
+
+\begin{mdframed} \textbf{Solution} \\
+a) Possibly true. We know for sure there is a value of y for which $G(3,y)$ is true, but it may not be 4, as stated here. \\
+b) Possibly true. For this to be true, then it must be the case that $y=3$ is the value for which all $G(x,y)$ is true. This is possible, but not guaranteed. \\
+c) Certainly true. There must exist a y to make $G(3,y)$ true, as all possible values of x have a y value that makes the proposition true. \\
+d) Certainly false. This is the negation of part c. The negation of possibly true is not possibly true, meaning impossible to be true, meaning false. \\
+e) Possibly true. There could be the case where the value of y for a certain x to make $G(x,y)$ true is 4, but it is not gauranteed. 
+\end{mdframed}
+
+
+\item True or False? \\
+$(\forall x) (\exists y) (P(x,y) \land \neg Q(x,y)) \equiv \neg (\exists x) (\forall y) (P(x,y) \implies Q(x,y))$
+
+\begin{mdframed} \textbf{Solution} \\
+True. Using DeMorgan's law and turning the proposition into its equivalent disjunction.
+\end{mdframed}
+
+\item True or False? \\
+$(\exists x) ((\forall y P(x,y)) \land (\forall z Q(x,z))) \equiv (\exists x) ((\forall y) (P(x,y)) \land (\exists x)(\forall z) Q(x,z)$
+
+\begin{mdframed} \textbf{Solution} \\
+False. Existence quantifiers do not distribute over disjunction.
+\end{mdframed}
+
+\item
+Give an expression using terms involving $\lor,\land$ and $\neg$ which is true if and only if
+exactly one of $X,Y$, and $Z$ are true.  (Just to remind you: $(X \land Y \land Z)$ means
+all three of $X$,$Y$,$Z$ are true, $(X \lor Y \lor Z)$ means at least one of $X$,$Y$
+and $Z$ is true.)
+
+\begin{mdframed} \textbf{Solution} \\
+$(x\land \neg y \land \neg z) \lor (\neg x \land y \land \neg z) \lor (\neg x \land \neg y \land z)$. Truth table matches spec.
+\end{mdframed}
+    
+\end{enumerate}
+
+
+\Question{Equivalent or Not}
+
+Determine whether the following equivalences hold, and give brief justifications for your answers. Clearly state whether or not each pair is equivalent.
+\begin{Parts}
+
+\Part $\forall x~\exists y~\big(P(x)\Rightarrow Q(x,y)\big)~\equiv~\forall x~\big(P(x)\Rightarrow(\exists y~Q(x,y))\big)$
+
+\begin{mdframed} \textbf{Solution} \\
+The expression on the left hand side is: \\
+$\forall x~\exists y~\big(P(x)\Rightarrow Q(x,y)\big)$ \\
+Distribute the existence quantifier: \\
+$\forall y~\big(\forall y P(x)\Rightarrow \exists y Q(x,y)\big)$ \\
+The universal quantifier in front of the $P(x)$ can be removed because the variable y has no effect on it. \\
+$\forall y~\big(P(x)\Rightarrow \exists y Q(x,y)\big)$ \\
+This is equivalent to right hand side.
+
+\end{mdframed}
+
+\Part $\neg\exists x~\forall y~\big(P(x,y)\Rightarrow\neg Q(x,y)\big)~\equiv~\forall x~\big( (\exists y~P(x,y)) \land (\exists y~Q(x,y)) \big)$
+
+\begin{mdframed} \textbf{Solution} \\
+Left hand side: \\
+$\neg\exists x~\forall y~\big(P(x,y)\Rightarrow\neg Q(x,y)\big)$ \\
+Apply DeMorgan, and turn proposition into disjunction: \\
+$\forall x~\exists y \neg ~\big(\neg P(x,y)\lor\neg Q(x,y)\big)$ \\
+Apply DeMorgan again: \\
+$\forall x~\exists y ~\big(P(x,y)\land Q(x,y)\big)$ \\
+Existence quantifier does not distribute over conjunction, so not equivalent to right hand side.
+\end{mdframed}
+
+\Part $\forall x~\big((\exists y~Q(x,y))\Rightarrow P(x)\big)~\equiv~\forall x~\exists y~\big(Q(x,y)\Rightarrow P(x)\big)$
+
+\begin{mdframed} \textbf{Solution} \\
+Right hand side is: \\
+$\forall x~\exists y~\big(Q(x,y)\Rightarrow P(x)\big)$ \\
+Distribute the existence quantifier: \\
+$\forall x~ \big(\forall y Q(x,y)\Rightarrow \exists y P(x)\big)$ \\
+The existence quantifier can be removed from $P(x)$ because y has no effect on it. \\
+$\forall x~ \big(\forall y Q(x,y)\Rightarrow P(x)\big)$ \\
+This is not equivalent to the left hand side. \\
+Counterexample. Define $P(x)$ to be true for all x. Then make $\forall y Q(x,y)$ false. However $((\exists y~Q(x,y))$ could be true.
+\end{mdframed}
+
+\end{Parts}
+
+
+\Question{Counterfeit Coins}
+
+\begin{Parts}
+
+\Part
+Suppose you have $9$ gold coins that look identical, but you also know
+one (and only one)
+of them is counterfeit. The counterfeit coin weighs slightly less
+than the others. You also have access to a balance scale to compare
+the weight of two sets of coins --- i.e., it can tell you whether
+one set of coins is heavier, lighter, or equal in weight to another
+(and no other information). However, your access to this scale is
+very limited.
+
+Can you find the counterfeit coin using {\em just two weighings}?
+Prove your answer.
+
+\begin{mdframed} \textbf{Solution} \\
+Yes, I can do this by separating the 9 gold coins into three stacks of three each. Then, I pick two random stacks and weigh, the lighter stack must have the counterfeit. If none are lighter, then the unweighted stack has the counterfeit. Then, I take the stack with the counterfeit and weigh two random coins from the stack. If one coin is lighter, then that must be the counterfeit. Otherwise, the unweighted coin must then be the counterfeit. 
+\end{mdframed}
+
+\Part
+Now consider a generalization of the same scenario described above.
+You now have $3^n$ coins, $n \geq 1$, only one of which is counterfeit.
+You wish to find the counterfeit coin with just $n$ weightings.
+Can you do it? Prove your answer.
+
+\end{Parts}
+
+\begin{mdframed} \textbf{Solution} \\
+Claim: \\ 
+$\forall n \in \mathbb{N} (n >= 1 \Rightarrow P(n))$ \\
+With: P(n) = "With $3^n$ coins, one of which is counterfeit, then I can find the counterfeit with a balance scale with n weightings." \\
+\textbf{Base case:} P(1). With $3^1=3$ coins, I can weigh any two coins. If one of them is lighter, then that one is the counterfeit. If both weigh the same, then the third must be the counterfeit. \\
+\textbf{Inductive Hypothesis:} If n = k, then $P(k) \Rightarrow P(k+1)$. \\
+\textbf{Inductive Step:} $P(k)$ says that I can find the counterfeit of $3^k$ coins. Then, I know that if I multiply my number of coins by three, and have one of them be a counterfeit, I can evenly divide the total coins into three stacks. The total number of coins are $3^{k+1}$, and each stack has $3^k$ coins. By weighting any of the two stacks, I can determine which stack contains the counterfeit coin. If one is lighter, then the lighter stack contains the counterfeit, otherwise, the counterfeit must be in the unweighted stack. Now, with the stack of $3^k$ that contains the counterfeit, I use the inductive hypothesis $P(k)$ for this stack, and find the counterfeit coin, using k weightings. Add this to the extra weighting at the beginning, $P(k+1)$ must be true. \qed
+\end{mdframed}
+
+\Question{Proof Checker}
+
+\begin{Parts}
+
+\Part \textbf{Claim}: for all $n\in\N$, $(2n+1$ is a multiple of $3) \implies (n^2+1$ is a multiple of $3)$.
+
+\textbf{Proof}: proof by contraposition. Assume $2n+1$ is not a multiple of 3.
+\begin{itemize}
+\item If $n=3k+1$ for $k\in\N$, then $n^2+1=9k^2+6k+2$ is not a multiple of 3.
+\item If $n=3k+2$ for $k\in\N$, then $n^2+1=9k^2+12k+5$ is not a multiple of 3.
+\item If $n=3k+3$ for $k\in\N$, then $n^2+1=9k^2+18k+10$ is not a multiple of 3.
+\end{itemize}
+In all cases, we have concluded $n^2+1$ is not a multiple of 3, so we have proved the claim.
+
+\begin{mdframed} \textbf{Solution} \\
+Incorrect. In proof by contraposition, one must prove that negation of the conclusion implies the negation of the hypothesis. However, the student goes about proving the negation of the hypothesis implies the negation of the conclusion.
+\end{mdframed}
+
+\Part \textbf{Claim}: for all $n\in\N$, $n<2^n$.
+
+\textbf{Proof}: the proof will be by induction on $n$.
+\begin{itemize}
+\item Base case: suppose that $n=0$. $2^0=1$ which is greater than $0$, so the statement is true for $n=0$.
+\item Inductive hypothesis: assume $n<2^n$.
+\item Inductive step: we need to show that $n+1<2^{n+1}$. By the inductive hypothesis, we know that $n<2^n$. Plugging in $n+1$ in place of $n$, we get $n+1<2^{n+1}$, which is what we needed to show. This completes the inductive step.
+\end{itemize}
+
+\begin{mdframed} \textbf{Solution} \\
+Incorrect. In proof by induction, during the inductive hypothesis, one cannot assume that the claim is true. Instead, one can assume that for a certain case, such as when $n=k$ is true, then proceed accordingly.
+\end{mdframed}
+
+\Part \textbf{Claim}: for all $x,y,n\in\N$, if $\max(x,y)=n$, then $x\leq y$.
+
+\textbf{Proof}: the proof will be by induction on $n$.
+\begin{itemize}
+\item Base case: suppose that $n=0$. If $\max(x,y)=0$ and $x,y\in\N$, then $x=0$ and $y=0$, hence $x\leq y$.
+\item Inductive hypothesis: assume that, whenever we have $\max(x,y)=k$, then $x\leq y$ must follow.
+\item Inductive step: we must prove that if $\max(x,y)=k+1$, then $x\leq y$. Suppose $x,y$ are such that $\max(x,y)=k+1$. Then, it follows that $\max(x-1,y-1)=k$, so by the inductive hypothesis, $x-1\leq y-1$. In this case, we have $x\leq y$, completing the induction step.
+\end{itemize}
+
+\begin{mdframed} \textbf{Solution} \\
+Incorrect. The inductive hypothesis as well as the claim both state that the two inputs for the max function must be both natural numbers. However, during the inductive step, $\max(x-1,y-1)=k$ does not consider the case where $x=0$ and $y=1$, where the inputs would be invalid. The base case would either have to be strengthened to where n=1, or $\max(x-1,y-1)=k$ would have to be removed from the proof. 
+\end{mdframed}
+
+\end{Parts}
+
+
+\Question{Preserving Set Operations}
+
+Prove that inverse images preserve set operations but images typically do not:
+
+\begin{enumerate}
+
+\item $f^{-1}(A \cup B) = f^{-1}(A) \cup f^{-1}(B)$.
+\begin{mdframed} \textbf{Solution} \\
+Assume that $y \in f^{-1}(A \cup B)$. \\
+Then, applying the image f to both sides (this is valid because for an arbitrary set S, $f(f^{-1}(S)) \subseteq S$. Then, the right side still holds because it was replaced by a more encompassing set that is at least as large as the original.): \\
+$f(y) \in A \cup B.$ \\
+Using the definition of union: \\
+$f(y) \in A \lor f(y) \in B$ \\
+Then apply the preimage $f^{-1}$ to both sides (this is valid because for an arbitrary set S, $S \subseteq f^{-1}(f(S))$. Then, replacing the left hand side with a less encompassing set that is at least equal to the original is okay.): \\
+$y \in f^{-1}(A) \lor y \in f^{-1}(B)$ \\
+$y \in f^{-1}(A) \cup f^{-1}(B)$ \\
+Because y is any element in the union of A and B, we have shown that: \\
+$f^{-1}(A \cup B) \subseteq f^{-1}(A) \cup f^{-1}(B)$ \\
+Next, we attempt to show that:
+$f^{-1}(A) \cup f^{-1}(B) \subseteq f^{-1}(A \cup B)$ \\
+Assume that $y \in f^{-1}(A) \cup f^{-1}(B)$ \\
+$y \in f^{-1}(A) \lor y \in f^{-1}(B)$ \\
+Apply the function f to both sides: \\
+$f(y) \in A \lor f(y) \in B$ \\
+$f(y) \in A \cup B$ \\
+Apply the inverse function to both sides: \\
+$y \in f^{-1}(A \cup B)$ \\
+Because y was defined as an arbitrary element in $f^{-1}(A) \cup f^{-1}(B)$, we have shown that $f^{-1}(A) \cup f^{-1}(B) \subseteq f^{-1}(A \cup B)$. Because we have also shown that $f^{-1}(A \cup B) \subseteq f^{-1}(A) \cup f^{-1}(B)$, then it follows that $f^{-1}(A \cup B) = f^{-1}(A) \cup f^{-1}(B)$, as two sets that are subsets of each other must be equal.
+\end{mdframed}
+
+\pagebreak
+\item $f^{-1}(A \cap B) = f^{-1}(A) \cap f^{-1}(B)$.
+\begin{mdframed} \textbf{Solution} \\
+Using the same approach as that of problem 1, assume that $y \in f^{-1}(A \cap B)$. \\
+Then, applying the image f to both sides: \\
+$f(y) \in A \cap B.$ \\
+$f(y) \in A \land f(y) \in B$ \\
+Then apply the preimage $f^{-1}$ to both sides: \\
+$y \in f^{-1}(A) \land y \in f^{-1}(B)$ \\
+$y \in f^{-1}(A) \cap f^{-1}(B)$ \\
+Because y is any element in the pre image of the intersection of A and B, we have shown that: \\
+$f^{-1}(A \cap B) \subseteq f^{-1}(A) \cap f^{-1}(B)$ \\
+Next, we attempt to show that:
+$f^{-1}(A) \cap f^{-1}(B) \subseteq f^{-1}(A \cap B)$ \\
+Assume that $y \in f^{-1}(A) \cap f^{-1}(B)$ \\
+$y \in f^{-1}(A) \land y \in f^{-1}(B)$ \\
+Apply the image f to both sides: \\
+$f(y) \in A \land f(y) \in B$ \\
+$f(y) \in A \cap B$ \\
+Apply the preimage $f^{-1}$ to both sides: \\
+$y \in f^{-1}(A \cap B)$ \\
+Because y was defined as an arbitrary element in $f^{-1}(A) \cap f^{-1}(B)$, we have shown that $f^{-1}(A) \cap f^{-1}(B) \subseteq f^{-1}(A \cap B)$. Because we have also shown that $f^{-1}(A \cap B) \subseteq f^{-1}(A) \cap f^{-1}(B)$, then it follows that $f^{-1}(A \cap B) = f^{-1}(A) \cap f^{-1}(B)$, as two sets that are subsets of each other must be equal.
+\end{mdframed}
+
+\pagebreak 
+\item $f^{-1}(A \setminus B) = f^{-1}(A) \setminus f^{-1}(B)$.
+\begin{mdframed} \textbf{Solution} \\
+Using the same approach as that of in problem 1, asssume that $y \in f^{-1}(A \setminus B)$. \\
+Then, applying the image f to both sides: \\
+$f(y) \in A \setminus B.$ \\
+$f(y) \in A \land f(y) \notin B$ \\
+Then apply the preimage $f^{-1}$ to both sides: \\
+$y \in f^{-1}(A) \land y \notin f^{-1}(B)$ \\
+$y \in f^{-1}(A) \setminus f^{-1}(B)$ \\
+Because y is any element in the relative complement of B in A, we have shown that: \\
+$f^{-1}(A \setminus B) \subseteq f^{-1}(A) \setminus f^{-1}(B)$ \\
+Next, we attempt to show that:
+$f^{-1}(A) \setminus f^{-1}(B) \subseteq f^{-1}(A \setminus B)$ \\
+Assume that $y \in f^{-1}(A) \setminus f^{-1}(B)$ \\
+$y \in f^{-1}(A) \land y \notin f^{-1}(B)$ \\
+Apply the image f to both sides: \\
+$f(y) \in A \land f(y) \notin B$ \\
+$f(y) \in A \setminus B$ \\
+Apply the preimage $f^{-1}$ to both sides: \\
+$y \in f^{-1}(A \setminus B)$ \\
+Because y was defined as an arbitrary element in $f^{-1}(A) \setminus f^{-1}(B)$, we have shown that $f^{-1}(A) \setminus f^{-1}(B) \subseteq f^{-1}(A \setminus B)$. Because we have also shown that $f^{-1}(A \setminus B) \subseteq f^{-1}(A) \setminus f^{-1}(B)$, then it follows that $f^{-1}(A \setminus B) = f^{-1}(A) \setminus f^{-1}(B)$, as two sets that are subsets of each other must be equal.
+\end{mdframed}
+
+\pagebreak
+\item $f(A \cup B) = f(A) \cup f(B)$.
+\begin{mdframed} \textbf{Solution} \\
+Assume that $y \in f(A \cup B)$. \\
+$\exists x \in (A \cup B)(f(x)=y) \Rightarrow (x \in A \lor x \in B)$ \\
+Apply the image f to both sides of the contains: \\
+$f(x) \in f(A) \lor f(x) \in f(B)$ \\
+$y \in f(A) \cup f(B)$ \\
+Because y is any element in $f(A \cup B)$, we have shown that: \\
+$f(A \cup B) \subseteq f(A) \cup f(B)$ \\
+Next, we attempt to show that:
+$f(A) \cup f(B) \subseteq f(A \cup B)$ \\
+Assume that $y \in f(A) \cup f(B)$ \\
+$y \in f(A) \lor y \in f(B)$ \\
+$\exists x \in A(f(x)=y) \lor \exists x \in B(f(x)=y)$
+$x \in A \lor x \in B$ \\
+$x \in (A \cup B)$ \\
+Apply the image f to both sides of the contains: \\
+$f(x) \in f(A \cup B)$ \\
+$y \in f(A \cup B)$ \\
+Because y was defined as an arbitrary element in $f(A) \cup f(B)$, we have shown that $f(A) \cup f(B) \subseteq f(A \cup B)$. Because we have also shown that $f(A \cup B) \subseteq f(A) \cup f(B)$, then it follows that $f(A \cup B) = f(A) \cup f(B)$, as two sets that are subsets of each other must be equal.
+\end{mdframed}
+
+\pagebreak
+\item $f(A \cap B) \subseteq f(A) \cap f(B)$, and give an example where equality does not hold.
+\begin{mdframed} \textbf{Solution} \\
+Assume that $y \in f(A \cap B)$. \\
+$\exists x \in (A \cap B)(f(x)=y)$ \\
+$x \in (A \cap B)$ \\
+$x \in A \land x \in B$ \\
+Applying the image f to both sides of the contains: \\
+$f(x) \in f(A) \land f(x) \in f(B)$ \\
+$y \in (f(A) \cap f(B))$
+Because y is any element in $f(A \cap B)$, we have shown that: \\
+$f(A \cap B) \subseteq f(A) \cap f(B)$ \\
+Next, we attempt to show that:
+$f(A) \cap f(B) \subseteq f(A \cap B)$ \\
+Assume that $y \in f(A) \cap f(B)$ \\
+$y \in f(A) \land y \in f(B)$ \\
+However, our initial assumption says: \\
+$(x_1 \in A \Rightarrow f(x_1) = y) \land (x_2 \in B \Rightarrow f(x_2) = y)$ says that $x_1 = x_2$. This is only true for one-to-one functions, so we cannot say that $f(A) \cap f(B) \subseteq f(A \cap B)$. \\
+One example would be the function $f(x) = \mid x \mid $. Take two sets A and B, where $A=[-1,0] \land B=[0,1]$. Then, $f(A \cap B) = {0}$ and $f(A) \cap f(B) = [0,1]$. The two are not equal. 
+\end{mdframed}
+
+\pagebreak
+\item $f(A \setminus B) \supseteq f(A) \setminus f(B)$, and give an example where equality does not hold.
+\begin{mdframed} \textbf{Solution} \\
+Assume that $y \in f(A) \setminus f(B)$. \\
+$y \in f(A) \land y \notin f(B)$ \\
+$\exists x \in A(f(x)=y) \land \forall x \in B(f(x)=y)$ \\
+$x \in (A \setminus B)$ \\
+Apply the image f to both sides of the contains: \\
+$f(x) \in f(A \setminus B)$ \\
+Because y was an arbitrary element in $f(A) \setminus f(B)$, then it must be the case that $f(A) \setminus f(B) \subseteq f(A \setminus B)$. \\
+Now, attempt to prove $f(A \setminus B) \subseteq f(A) \setminus f(B)$. \\
+Assume $y \in f(A \setminus B)$. \\
+$x \in A \land x \notin B$ \\
+Apply the image to both sides of the contains: \\
+$f(x) \in f(A) \land f(x) \notin f(B)$ \\
+The assumption said that $y \in f(A \setminus B)$. And from $y \in f(A) \land y \notin f(B)$, $y \notin f(B)$ must be true. Then, as y is any arbitrary element in $f(A \setminus B)$, it must follow that $f(A \setminus B) \not\subseteq f(B)$. This is not necesarrily true for a function that is not one to one. Take $f(x) = \mid x \mid, A=[-1,0], B=[0,1], f(A\setminus B) = [0,1], f(B) = [0,1]$, then $f(A \setminus B) = f(B)$, which is a contradiction.
+
+\end{mdframed}
+
+\end{enumerate}
+
+
+
+\Question{Grid Induction}
+
+A bug is walking on an infinite 2D grid.
+He starts at some location $(i, j) \in \N^2$ in the first quadrant,
+and is constrained to stay in the first quadrant (say, by walls along the x and
+y axes).
+Every second he does one of the following (if possible):
+\begin{enumerate}[(i)]
+  \item Jump one inch down, to $(i, j-1)$.
+  \item Jump one inch left, to $(i-1, j)$.
+\end{enumerate}
+For example, if he is at $(5, 0)$, his only option is to jump left to $(4, 0)$.
+
+Prove that no matter how he jumps, he will always reach $(0, 0)$ in finite time.
+
+\begin{mdframed} \textbf{Solution} \\
+\textbf{Claim:} $\forall i,j \in \mathbb{N} (P(n))$, where $P(n)$: $i+j=n$, if $(i,j)$ is where the bug starts, then the bug reaches $(0,0)$ in k time. \\
+\textbf{Proof by induction:} Induction on the variable k: \\
+\textbf{Base Case:} $P(0,0)$, this is true because the big reaches $(0,0)$ in zero seconds. Zero is finite time.\\
+\textbf{Inductive hypothesis:} For some proven k $n=k, P(k)$, then the bug reaches $(0,0)$ in k time. \\ 
+\textbf{Inductive step:} For $P(k+1)$, there are only two possible moves, one of which may be blocked by the border of the grid. Either move down or left, both of which necessarily leading to $P(k)$, as both $i + (j-1) = k, (i-1) + j = k$. By the inductive hypothesis, $P(k)$ is true. 
+\end{mdframed}
+
+\Question{A Tricky Game}
+
+\begin{Parts}
+\Part CS 70 course staff invite you to play a game: Suppose there are $n^2$ coins in a $n\times n$ grid ($n > 0$), each with their heads side up. In each move, you can pick one of the $n$ rows or columns and flip over all of the coins in that row or column. However, you are not allowed to re-arrange them in any other way. You have an unlimited number of moves. If you happen to reach a configuration where there is exactly one coin with its tails side up, you will win the game. Are you able to win this game? Find all values of $n$ for which you can win the game, and prove your statement. In other words, for each value of $n$ that you listed, prove that you can win the game; then, prove that it is impossible to win the game for all other values of $n$.
+
+\begin{mdframed} \textbf{Solution} \\
+\textbf{Claim}: $P(n)$: You are not able to win the game described above when the grid has dimensions $n x n$. \\
+$\forall n \in \mathbb{N} (n > 1) \Rightarrow P(n)$ \\
+There does not exist any way to win this game other than the case where $n = 1$. \\
+\textbf{Proof by induction:} \\
+\textbf{Base case:} $P(2)$. With a 2 x 2 board, you start with a full board with four heads. To win, there can only be one head left. These are the possible moves. One full row with heads flipped creates a net gain of two tails. One full row of tails flipped creates a net gain of negative two tails. If a row has one tail and one head, regardless of which order in which they appear, flipping them is a net gain of zero tails. Because all net gains of tails are even, there is no way to have a net gain of one tail on the board. \\
+\textbf{Inductive Hypothesis:} $n = k, (P(k) \Rightarrow P(k+1))$. If an $k x k$ board is impossible, then an $(k+1) x (k+1)$ board is also impossible. \\
+\textbf{Inductive Step:} \\
+\textit{Lemma:} winning a game with a $n x n$ board backwards is equivalent to winning it forward. If the board starts with one tail, showing that it can be flipped to all heads is equivalent of winning the game. This is because all moves are commutative, and can be done in reverse. If this is not achievable, then it is impossible to win the board.\\
+Assume that $P(k)$ is true. Then, the new board $P(k+1)$ can be represented by putting four boards of $kxk$ at each of the corners, and all pennies will be covered with some overlap. Work backwards. Assume that a single tails is placed on the grid, and the lemma says that flipping to a board with all heads means the game is won. Focus on one of the single $kxk$ partitions that encompasses the single tails, and attempt to flip to all heads. By the inductive hypothesis, that is impossible, because $P(k)$ is assumed true. If a single partition cannot be flipped to all heads, then the entire $(k+1)x(k+1)$ grid cannot be flipped to all heads. And by the lemma, the board is unsolvable. $P(k+1)$.
+
+\end{mdframed}
+
+\Part (Optional) Now, suppose we change the rules: If the number of ``tails'' is between 1 and $n-1$, you win. Are you able to win this game? Does that apply to all $n$? Prove your answer.
+
+\begin{Answer}
+
+
+\end{Answer}
+
+\end{Parts}
+%%%%%%%%%%%%%%%%%%%% QUESTIONS END HERE
+
+\end{document}

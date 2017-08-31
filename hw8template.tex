@@ -1,0 +1,286 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,setspace,tabto,fancyhdr,sectsty,graphicx}
+\usepackage[shortlabels]{enumitem}
+\usepackage[nobreak=true]{mdframed}
+\usepackage[left=1.25in,right=0.75in,top=1.25in,bottom=2.0in]{geometry}
+
+\newcommand*{\Question}[1]{\section{#1}}
+\newenvironment{Parts}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
+\newcommand*{\Part}{\item}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNCOMMENT NEXT LINE FOR SOLUTION BOXES
+% \newcommand*{\solnboxes}{}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Raymond Feng | 3032021864}
+
+%%%%%%%%%%%%%%%%%%%% hw number
+\newcommand*{\hwnum}{8}
+
+
+\ifdefined\solnboxes
+    \newenvironment{Answer}{\vspace{10pt}\begin{mdframed}\textbf{Solution}\\}{\end{mdframed}\vfill\pagebreak[3]}
+\else
+    \newenvironment{Answer}{\vspace{10pt}}{\vfill\pagebreak[3]}
+\fi
+\newcommand*{\MC}[1]{\multicolumn{1}{c}{#1}}
+\newcommand*{\N}{\mathbb{N}}
+\newcommand*{\Z}{\mathbb{Z}}
+\newcommand*{\Q}{\mathbb{Q}}
+\newcommand*{\R}{\mathbb{R}}
+\newcommand*{\C}{\mathbb{C}}
+\newcommand*{\GF}{\text{GF}}
+
+\pagestyle{fancy}
+\headheight=75pt
+\sectionfont{\Large\fontfamily{lmdh}\selectfont}
+
+\renewcommand{\headrulewidth}{6pt}
+\chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
+\lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
+CS 70        \tabto{96pt} Discrete Mathematics and Probability Theory\smallskip\\
+Spring 2017  \tabto{96pt} Rao}
+\rhead{\huge     \fontfamily{lmdh}\selectfont     HW \hwnum}
+
+\lfoot{\small CS 70, Spring 2017, HW \hwnum}
+\begin{document}
+
+\Question{Sundry} 
+\vspace{10pt}
+%%%%%%%%%%%%%%%%%%%% SUNDRY PART HERE
+\begin{mdframed} \textbf{Solution} 
+\item \textit {I, Raymond Feng, certify that all solutions are entirely in my words and that I have not looked at another student's solutions. I have credited all external sources in this write up.}
+\item Sherman Luo email - shermanluo@berkeley.edu
+\item Credit for this LaTex template goes to anonymous CS70 Piazza user.
+\end{mdframed}
+%%%%%%%%%%%%%%%%%%%% END SUNDRY
+\vfill\pagebreak[3]
+
+%%%%%%%%%%%%%%%%%%%% QUESTIONS START HERE
+\Question{Story Problems}
+
+\newcommand{\sblank}{\vspace{1in}}
+Prove the following identities by combinatorial argument:
+\begin{Parts}
+\Part $\binom{2n}{2} = 2 \binom{n}{2} + n^2$
+\begin{mdframed} \textbf{Solution} \\
+\textbf{LHS: }Two people are chosen out of a group of $2n$ (twenty) people consisting of ten men and ten women. $n=10$. So the LHS is the total number of possible gay, lesbian, and straight couples that can be chosen from a group of ten men and ten women. \\
+\textbf{RHS: }$\binom{n}{2}$ is the number of ways two people can be chosen from a group of ten people. This is the same as the number of gay couples that can be made from choosing two men from a group of ten men. Multiplying by two accounts for the number of lesbian couples that can be made from a group of ten women. This is valid because in a marriage the order of the two people in the couple does not matter, and the case of women is no different from the case of men, so the number of lesbian couples is same as the number of gay couples because they are both $\binom{n}{2}$. Then, we have to add $n^2$ as this is the number of ways to construct straight couples by first choosing a male and then a female. Because both groups have ten people, the number of ways is $n*n$. So the RHS is the total number of gay, lesbian, and straight couples that can chosen from a group of ten men and ten women. This is the same as LHS. \qed
+\end{mdframed}
+
+\Part $n^2 = 2 \binom{n}{2} + n$
+\begin{mdframed} \textbf{Solution} \\
+Rearrange: $n^2-n=2\binom{n}{2}$ \\
+$n(n-1)=2\binom{n}{2}$ \\
+\textbf{LHS: }The number of ways to choose two people from $n$ people where order matters. \\
+\textbf{RHS: }The number of ways to choose two people from n where order doesn't matter, but multiplying by two because each resulting pair of people has a corresponding "flipped" pair as if order did matter. \qed
+\end{mdframed}
+
+\Part $\sum_{k=0}^n k {n \choose k} = n2^{n-1}$ \\
+\textit{Hint:} Consider how many ways there are to pick groups of people ("teams") and then a representative ("team leaders").
+\begin{mdframed} \textbf{Solution} \\
+\textbf{RHS: }$2^{n}$ is the number of subsets of $n$ people. Then, for each subset, there are $n$ choices of leader. However, $n2^n$ is double counting, as each resulting subset with a leader is counted twice. For example if we have a subset $S_1$ that is a subset of $n$ people of size $k$ with person one chosen as the leader, then there is also an $S'_1$ without a leader and without person one that is of size $k-1$. Then, according to our counting, this $S'_1$ has $n$ options of leader, one of them is person one. Then, choosing this person one would make $S'_1$ equivalent to $S_1$, as they are the same subset with the same leader. This is the case for all subsets, they are counted exactly twice. So divide by 2, and $n2^{n-1}$ is the number of ways to choose a subset of $n$ people and designate a leader in each subset. \\
+\textbf{LHS: }$\binom{n}{k}$ is the number of size $k$ subsets of a set of $n$ people. Then, to choose a leader there are $k$ choices. There are $k$ choices instead of $n$ because $k$ ensures the resulting set is never larger, for the case where the leader is a person not in the original subset. Then, sum over $k$ from $0$ to $n$ to get all subsets of $n$ people with a designated leader. \qed 
+\end{mdframed}
+
+\Part $\sum_{k=j}^n {n \choose k} {k \choose j} = 2^{n-j} {n \choose j}$ \\
+\textit{Hint:} Consider a generalization of the previous part.
+\begin{mdframed} \textbf{Solution} \\
+\textbf{LHS: }$\binom{n}{k}$ is the number of ways to choose a subset of $k$ people from $n$ people. Then, $\binom{k}{j}$ is the number of ways to choose $j$ leaders from the subset of $k$ people. Then, summing $k$ from $j$ to $n$ is the total number of ways to choose subsets with $j$ leaders each from a subset of at least $j$ people from a group of $n$ people. \\
+\textbf{RHS: }$\binom{n}{j}$ is the total number of ways to choose a subset of $j$ people from $n$ total people. We define these $j$ people as our leaders. Then, for each group of leaders, there are $2^{n-j}$ ways to pair that group of leaders with a subset of $n$ people of max size $n-j$. Thus, $2^{n-j}\binom{n}{j}$ is the number of ways to create a subset of $n$ people with $j$ leaders. That is the same as LHS. \qed
+\end{mdframed}
+
+\end{Parts}
+
+% Carries over from 10M
+
+
+\Question{Probability Potpourri}
+
+Prove a brief justification for each part.
+
+\begin{Parts}
+
+\Part For two events $A$ and $B$ in any probability space, show that $\Pr(A \setminus B) \geq \Pr(A) - \Pr(B)$.
+\begin{mdframed} \textbf{Solution} \\
+$Pr[A \setminus B] \geq Pr[A]-Pr[B]$ \\
+$Pr[A \setminus B]=Pr[A \cap \overline{B}]=Pr[A|\overline{B}]Pr[\overline{B}]$ \\
+$Pr[A|\overline{B}]Pr[\overline{B}] \geq Pr[A]-Pr[B]$ \\
+$Pr[\overline{B}|A]Pr[A] \geq Pr[A]-Pr[B]$ \\
+$Pr[B] \geq Pr[A](1-Pr[\overline{B}|A])$ \\
+$Pr[B] \geq Pr[A]Pr[B|A]$ \\
+$1 \geq Pr[B|A]Pr[A]/Pr[B]$ \\
+$1 \geq Pr[A|B]$ \qed 
+\end{mdframed}
+
+\Part If $|\Omega| = n$, how many distinct events does the probability space have?
+\begin{mdframed} \textbf{Solution} \\
+$2^n$. If the cardinality of $\Omega$ is $n$, then the number of distinct events is the number of distincy subsets of $\Omega$. By definition, this is $2^n$.
+\end{mdframed}
+
+\Part Find some probability space $\Omega$ and three events $A, B$, and $C \subseteq \Omega$ such that $\Pr(A) > \Pr(B)$ and $\Pr(A \mid C) < \Pr(B \mid C)$.
+\begin{mdframed} \textbf{Solution} \\
+Flipping a coin three times. A: Exactly two heads. B: No heads. C: Two tails. \\
+$Pr[A]=3/8>Pr[B]=1/8$ and $Pr[A|C]=0/8<Pr[B|C]=1/4$. 
+\end{mdframed}
+
+\Part If two events $C$ and $D$ are disjoint and $\Pr(C) > 0$ and $\Pr(D) > 0$, can $C$ and $D$ be independent? If so, provide an example. If not, why not?
+\begin{mdframed} \textbf{Solution} \\
+No. In order for $C$ and $D$ to be independent, $Pr[C \cap D]=Pr[C]Pr[D]$. If $C$ and $D$ are disjoint, then $Pr[C \cap D]=0$. Then it must be that $Pr[C]Pr[D]=0$. Then, either $Pr[C]$ or $Pr[D]$ or both must be 0. However, this is a contradiction, because we assumed that $Pr[C]>0$ and $Pr[D]>0$. 
+\end{mdframed}
+
+\Part Suppose $\Pr(D \mid C) = \Pr(D \mid \overline{C})$, where $\overline{C}$ is the complement of $C$. Prove that $D$ is independent of $C$.
+\begin{mdframed} \textbf{Solution} \\
+$Pr[D|C]=Pr[D|\overline{C}]$ \\
+$Pr[D|C]=\frac{Pr[C|D]Pr[D]}{Pr[C]}=Pr[D|\overline{C}]=\frac{Pr[\overline{C}|D]Pr[D]}{Pr[\overline{C}]}$ \\
+$\frac{Pr[C|D]Pr[D]}{Pr[C]}=\frac{Pr[\overline{C}|D]Pr[D]}{Pr[\overline{C}]}$ \\
+$\frac{Pr[C|D]}{Pr[C]}=\frac{Pr[\overline{C}|D]}{Pr[\overline{C}]}$ \\
+$\frac{Pr[\overline{C}}{Pr[C]}=\frac{Pr[C|D]}{Pr[C|D]}$ \\
+$\frac{1-Pr[C]}{Pr[C]}=\frac{1-Pr[C|D]}{Pr[C|D]}$ \\
+$\frac{1}{Pr[C]}-1=\frac{1}{Pr[C|D]}-1$ \\
+$\frac{1}{Pr[C]}=\frac{1}{Pr[C|D]}$ \\
+$Pr[C]=Pr[C|D]$ \qed
+\end{mdframed}
+
+\end{Parts}
+
+\Question{Parking Lots}
+
+Some of the CS 70 staff members founded a start-up company, and you just got hired.
+The company has twelve employees (including yourself), each of whom drive a car to work, 
+and twelve parking spaces arranged in a row. You may assume that each day all orderings 
+of the twelve cars are equally likely.
+
+\begin{Parts}
+
+\Part On any given day, what is the probability that you park next to Professor Rao, 
+who is working there for the summer?
+\begin{mdframed} \textbf{Solution} \\
+$\frac{11*2*10!}{12!}$ 
+\end{mdframed}
+
+\Part What is the probability that there are exactly three cars between yours
+and Professor Rao's?
+\begin{mdframed} \textbf{Solution} \\
+$\frac{8*2*10!}{12!}$ 
+\end{mdframed}
+
+\Part Suppose that, on some given day, you park in a space that is not at one of
+the ends of the row.  As you leave your office, you know that exactly five of
+your colleagues have left work before you.  Assuming that you remember nothing
+about where these colleagues had parked, what is the probability that you will
+find both spaces on either side of your car unoccupied?
+\begin{mdframed} \textbf{Solution} \\
+$\frac{5*4}{10*11}$
+\end{mdframed}
+\end{Parts}
+
+
+\Question{Calculate These... or Else}
+
+\begin{Parts}
+
+\Part 
+A straight is defined as a 5 card hand such that the card values can be arranged in consecutive ascending order, i.e.\ $\{8,9,10,J,Q\}$ is a straight. Values do not loop around, so $\{Q, K, A, 2, 3\}$ is not a straight. When drawing a 5 card hand, what is the probability of drawing a straight from a standard 52-card deck?
+\begin{mdframed} \textbf{Solution} \\
+$\frac{36*4^4}{\binom{52}{5}}$
+\end{mdframed}
+
+\Part
+When drawing a 5 card hand, what is the probability of drawing at least one card from each suit?
+\begin{mdframed} \textbf{Solution} \\
+$\frac{4*13^3\binom{13}{2}}{\binom{52}{5}}$
+\end{mdframed}
+
+\Part 
+Two squares are chosen at random on $8\times 8$ chessboard. What is the probability that they share a side?
+\begin{mdframed} \textbf{Solution} \\
+$\frac{2*2*7*8}{64*63}$
+\end{mdframed}
+
+\Part 
+8 rooks are placed randomly on an $8\times 8$ chessboard. What is the probability none of them are attacking each other? (Two rooks attack each other if they are in the same row, or in the same column).
+\begin{mdframed} \textbf{Solution} \\
+$\frac{8!}{\binom{52}{5}}$
+\end{mdframed}
+
+\Part A bag has two quarters and a penny. If someone removes a coin, the Coin-Replenisher will come and drop in 1 of the coin that was just removed with $3/4$ probability and with $1/4$ probability drop in 1 of the opposite coin. Someone removes one of the coins at random. The Coin-Replenisher drops in a penny. You randomly take a coin from the bag. What is the probability you take a quarter?
+\begin{mdframed} \textbf{Solution} \\
+$\frac{8}{15}$
+\end{mdframed}
+
+\end{Parts}
+
+
+\Question{Independent Complements}
+
+Let $\Omega$ be a sample space, and let $A,B \subseteq \Omega$ be two independent events.
+
+\begin{Parts}
+
+\Part Prove or disprove: $\overline{A}$ and $\overline{B}$ are necessarily independent.
+\begin{mdframed} \textbf{Solution} \\
+$1-A-B+|A \cap B|=1-A-B+|A||B|$. From the definition of independent. \\
+$1-A-B+|A \cap B|=(1-A)(1-B)$ \\
+$(1-B)/(1-A-B+A \cap B)=1/(1-A)$ \\
+$B^\complement/A^\complement \cap B^\complement=1/A^\complement$ \\
+$A^\complement \cap B^\complement / B^\complement=A^\complement$ \\
+$Pr[A^\complement \cap B^\complement]/Pr[B^\complement]=Pr[A^\complement]$ \\
+$Pr[A^\complement \cap B^\complement]=Pr[A^\complement]Pr[B^\complement]$ \qed
+\end{mdframed}
+
+\Part Prove or disprove: $A$ and $\overline{B}$ are necessarily independent.
+\begin{mdframed} \textbf{Solution} \\
+$Pr[\overline{A}|\overline{B}]=Pr[\overline{A}]$ from part a. \\
+$1-Pr[A|\overline{B}]=1-Pr[A]$ \\
+$Pr[A|\overline{B}]=Pr[A]$ \qed
+\end{mdframed}
+
+\Part Prove or disprove: $A$ and $\overline{A}$ are necessarily independent.
+\begin{mdframed} \textbf{Solution} \\
+False. Assume $Pr[A \cap \overline{A}]=Pr[A]*Pr[\overline{A}]$. \\
+$Pr[A \cap \overline{A}]=0$, so $A$ and $\overline{A}$ are only independent if one or the other is 0. \qed 
+\end{mdframed}
+
+\Part Prove or disprove: It is possible that $A=B$.
+\begin{mdframed} \textbf{Solution} \\
+Yes, if $Pr[A]=Pr[B]=1$, which means that $A=B$ by necessity. 
+\end{mdframed}
+
+\end{Parts}
+
+\Question{Bag of Coins}
+
+Your friend Forest has a bag of $n$ coins. You know that $k$ are biased with
+probability $p$ (i.e.\ these coins have probability $p$ of being heads). Let
+$F$ be the event that Forest picks a fair coin, and let $B$ be the event that
+Forest picks a biased coin. Forest draws three coins from the bag, but he does
+not know which are biased and which are fair.
+
+\begin{Parts}
+\Part What is the probability of $FFB$?
+\begin{mdframed} \textbf{Solution} \\
+$\frac{n-k}{n}*\frac{n-k-1}{n-1}*\frac{k}{n-2}$
+\end{mdframed}
+
+\Part What is the probability that the third coin he draws is biased?
+\begin{mdframed} \textbf{Solution} \\
+$\frac{k}{n}$
+\end{mdframed}
+
+\Part What is the probability of picking at least two fair coins?
+\begin{mdframed} \textbf{Solution} \\
+$\frac{\binom{n-k}{2}*k+\binom{n-k}{3}}{\binom{n}{3}}$
+\end{mdframed}
+
+\Part Given that Forest flips the second coin and sees heads, what is the
+probability that this coin is biased?
+\begin{mdframed} \textbf{Solution} \\
+$\frac{\frac{k}{n}*p}{\frac{k}{n}*p+\frac{n-k}{n}*(\frac{1}{2})}$
+\end{mdframed}
+\end{Parts}
+%%%%%%%%%%%%%%%%%%%% QUESTIONS END HERE
+
+\end{document}

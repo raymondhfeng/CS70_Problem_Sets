@@ -1,0 +1,392 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,setspace,tabto,fancyhdr,sectsty,graphicx}
+\usepackage[shortlabels]{enumitem}
+\usepackage[nobreak=true]{mdframed}
+\usepackage[left=1.25in,right=0.75in,top=1.25in,bottom=2.0in]{geometry}
+
+\newcommand*{\Question}[1]{\section{#1}}
+\newenvironment{Parts}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
+\newcommand*{\Part}{\item}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNCOMMENT NEXT LINE FOR SOLUTION BOXES
+% \newcommand*{\solnboxes}{}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Raymond Feng | 3032021864}
+
+%%%%%%%%%%%%%%%%%%%% hw number
+\newcommand*{\hwnum}{7}
+
+
+\ifdefined\solnboxes
+    \newenvironment{Answer}{\vspace{10pt}\begin{mdframed}\textbf{Solution}\\}{\end{mdframed}\vfill\pagebreak[3]}
+\else
+    \newenvironment{Answer}{\vspace{10pt}}{\vfill\pagebreak[3]}
+\fi
+\newcommand*{\MC}[1]{\multicolumn{1}{c}{#1}}
+\newcommand*{\N}{\mathbb{N}}
+\newcommand*{\Z}{\mathbb{Z}}
+\newcommand*{\Q}{\mathbb{Q}}
+\newcommand*{\R}{\mathbb{R}}
+\newcommand*{\C}{\mathbb{C}}
+\newcommand*{\GF}{\text{GF}}
+
+\pagestyle{fancy}
+\headheight=75pt
+\sectionfont{\Large\fontfamily{lmdh}\selectfont}
+
+\renewcommand{\headrulewidth}{6pt}
+\chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
+\lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
+CS 70        \tabto{96pt} Discrete Mathematics and Probability Theory\smallskip\\
+Spring 2017  \tabto{96pt} Rao}
+\rhead{\huge     \fontfamily{lmdh}\selectfont     HW \hwnum}
+
+\lfoot{\small CS 70, Spring 2017, HW \hwnum}
+\begin{document}
+
+\Question{Sundry} 
+\vspace{10pt}
+%%%%%%%%%%%%%%%%%%%% SUNDRY PART HERE
+\begin{mdframed} \textbf{Solution} 
+\item \textit {I, Raymond Feng, certify that all solutions are entirely in my words and that I have not looked at another student's solutions. I have credited all external sources in this write up.}
+\item Sherman Luo email - shermanluo@berkeley.edu
+\item Credit for this LaTex template goes to anonymous CS70 Piazza user.
+\end{mdframed}
+%%%%%%%%%%%%%%%%%%%% END SUNDRY
+\vfill\pagebreak[3]
+
+%%%%%%%%%%%%%%%%%%%% QUESTIONS START HERE
+\Question{More Countability}
+
+Given:
+\begin{itemize}
+\item $A$ is a countable set, non-empty set. For all $i \in A$, $S_i$ is an uncountable set.
+\item $B$ is an uncountable set. For all $i \in B$, $Q_i$ is a countable set.
+\end{itemize}
+
+For each of the following, decide if the expression is
+"Always Countable", "Always Uncountable", "Sometimes Countable,
+Sometimes Uncountable".
+
+For the "Always" cases, prove your claim. For the "Sometimes" case, provide
+two examples -- one where the expression is countable, and one where
+the expression is uncountable.
+
+\begin{Parts}
+    
+\Part $\bigcup_{i \in A} S_i$
+\begin{mdframed} \textbf{Solution} \\
+Always uncountable. Because $A$ is non-empty, assume that an arbitrary $x_0 \in A$. Then by definition, $S_{x_0}$ is uncountable. Either $A$ has one element, or more than one element. It is not possible for $A$ to have less than one element because it is non-empty. \\
+Case 1: $x_0$ is the only element in $A$. Then, we are done, because $\bigcup_{i \in A} S_i = S_{x_0}$, and $S_{x_0}$ is uncountable. \\
+Case 2: $x_0$ is not the only element in $A$. Then, because $S_{x_0}$ union with any other set must at least be as large as $S_{x_0}$, then $\bigcup_{i \in A} S_i$ has a lower bound of $S_{x_0}$, which by definition is uncountable. \qed
+\end{mdframed}
+
+\Part $\bigcap_{i \in A} S_i$ 
+\begin{mdframed} \textbf{Solution} \\
+Sometimes countable, sometimes uncountable. \\
+Sometimes uncountable: If, for example, $x_0 \in A$ is the only element in $A$, and we define $S_{x_0}$ to be the subset of the real numbers $(0,1)$, then $\bigcap_{i \in A} S_i=S_{x_0}$ is uncountable. \\
+Sometimes countable: If, for example, $x_0 \in A$ and $y_0 \in A$ are the only two elements in $A$, and we define $S_{x_0}=(0,1), S_{y_0}=(1,2)$, then $\bigcap_{i \in A} S_i=S_{x_0} \cap S_{y_0}=\emptyset$. \qed
+\end{mdframed}
+
+\Part $\bigcup_{i \in B} Q_i$
+\begin{mdframed} \textbf{Solution} \\
+Sometimes countable, sometimes uncountable. \\
+Sometimes countable: If we define $Q_i=\emptyset$ for all $i \in B$, then $\bigcup_{i \in B} Q_i=\emptyset$. \\
+Sometimes uncountable: If all $Q_i$ have a non zero cardinality, then you know that $\bigcup_{i \in B} Q_i$ is uncountable because the cardinality of the union must be at least the cardinality of $B$, implying that it is uncountable. \qed 
+\end{mdframed}
+
+\Part $\bigcap_{i \in B} Q_i$
+\begin{mdframed} \textbf{Solution} \\
+Always countable. Given $x_0 \in B$, $Q_{x_0}$ is countable by definition. Then, $Q_{x_0}$ intersection with any other set can only be as large as $Q_{x_0}$, which means that $\bigcap_{i \in B} Q_i$ is countable. \qed 
+\end{mdframed}
+
+\Part $A \cap B$
+\begin{mdframed} \textbf{Solution} \\
+Always countable. If an element $x \in A \cap B \Rightarrow x \in A$. This means that $A \cap B \subseteq A$. A subset of a countable set is always countable. \qed 
+\end{mdframed}
+
+\end{Parts}
+
+
+\Question{Counting Cartesian Products}
+
+For two sets $A$ and $B$, define the Cartesian Product as $A \times B = \{(a,b) : a \in A, b \in B \}$.
+
+\begin{Parts}
+    \Part Given two countable sets $A$ and $B$, prove that $A \times B$ is countable.
+\begin{mdframed} \textbf{Solution} \\
+It was proved in lecture that $\mathbb{N}x\mathbb{N}$ is countable. Because $A$ and $B$ are countable, then there exists injections $f_1:A \rightarrow \mathbb{N}, f_2:B \rightarrow \mathbb{N}$. That means that $\forall x_1 \in A \exists y_1 \in \mathbb{N}(f_1(x_1)=y)$ and $\forall x_1 \in B \exists y_1 \in \mathbb{N}(f_2(x)=y)$. Which means that all $(x_1,x_2) \in (A \times B)$ has a representation $(f_1(x_1), f_2(x_2)) \in \mathbb{N} \times \mathbb{N}$. This means that we can define another injection $f_3:(A \times B) \rightarrow \mathbb{N} \times \mathbb{N}$. Thus, $A \times B$ is countable. \qed
+\end{mdframed}
+
+    \Part Given a finite number of countable sets $A_1, A_2, \dots, A_n$, prove that 
+    $A_1 \times A_2 \times \cdots \times A_n$ \\is countable. 
+\begin{mdframed} \textbf{Solution} \\
+Stronger claim: For all $n \in \mathbb{N}$, if all $A_i$ is countable, then $A_1 \times A_2 \times ... \times A_3$ is countable. \\
+Proof by induction on $n$. \\
+Base case: For $n=1$, $A_1$ is trivially countable. \\
+Inductive hypothesis: For some $n=k$, $A_1 \times A_2 \times ... A_k$ is countable. \\
+Inductive step: The claim states that any $A_{k+1}$ considered must also be countable. By the inductive hypothesis, $A_1 \times A_2 \times ... \times A_k$ is countable, and so part a tells us that the two countable sets have a countable Cartesian product $A_1 \times A_2 \times ... \times A_k \times A_{k+1}$. 
+\end{mdframed}
+
+    \Part Consider an infinite number of countable sets: $B_1, B_2, \dots$. Under what
+    condition(s) is \\$B_1 \times B_2 \times \cdots$ countable? Prove that if this
+    condition is violated, $B_1 \times B_2 \times \cdots$ is uncountable.
+\begin{mdframed} \textbf{Solution} \\
+$B_1 \times B_2 \times ...$ is countable if and only if at least one of the sets $B_i=\emptyset$. \\
+Let us assume the opposite that none of $B_i=\emptyset$ and $B_1 \times B_2 \times ...$ is countable. Then there must be a listing $S$ that contains all the elements of $B_1 \times B_2 \times ...$. These elements can be thought of as "infinite tuples". I will diagonally construct a tuple $T$ as such. If the element of the first tuple of $S, s_1$ is element $a$, then make the first element of $T$ an element $b \in B_1(a \neq b)$. Do the same for the second element in $s_2$ and so on. Then, this tuple $T \in B_1 \times B_2 \times ...$, but as shown by the diagonalization, is aiso $T \not \in B_1 \times B_2 \times ...$. This is a contradiction, so our initial claim must have been false. Thus, it is the case that $B_1 \times B_2 \times ...$ is countable if and only if there is at least one $B_i=\emptyset$. \qed
+\end{mdframed}
+
+\end{Parts}
+
+\Question{Impossible Programs}
+
+Show that none of the following programs can exist.
+
+\begin{Parts}
+
+\Part
+Consider a program $P$ that takes in any program $F$, input $x$ and output $y$ and returns true if
+$F(x)$ outputs $y$ and returns false otherwise.
+\begin{mdframed} \textbf{Solution} \\
+Assuming that this program $P$ exists, then I can construct the program: \\
+Halt(F,x) \\
+Define F'(x) \\
+... F(x) \\
+... return 0 \\
+return P(F',x,0) \\
+The call P(F',x,0) will return true if and only if F(x) halts, which means this program solves the halting problem, which has been proved impossible by the notes, so our assumption must have been false. $P$ cannot exist. \qed
+\end{mdframed}
+
+\Part
+Consider a program $P$ that takes in any program $F$ and returns true if $F(F)$ halts and returns
+false if it doesn't halt.
+\begin{mdframed} \textbf{Solution} \\
+I assume that $P$ exists, and define a function $F$ that utilizes $P$: \\
+F(f) \\
+if P(f) is true, loop forever \\
+else, halt \\
+Then, call F(F), and analyze the result. \\
+Case 1: If F(F) halts, then P(F) must have returned false. However, this is a contradiction, because P(F) returning false means that F(F) didn't halt. \\
+Case 2: If F(F) doesn't halt, then that means that P(F) must have returned true. But P(F) returning true means that F(F) halts, which is a contradiction. \\
+Thus, our assumption P(F) existing must be false. \qed
+\end{mdframed}
+
+\Part
+Consider a program $P$ that takes in any programs $F$ and $G$ and returns true if $F$ and $G$ halt
+on all the same inputs and returns false otherwise.
+\begin{mdframed} \textbf{Solution} \\
+I assume that $P$ exists, and which it I construct the following program: \\
+EasyHalt(H) \\
+define program F that halts on input 0 \\
+return P(F,H) \\
+It is clear that with this problem, I have just solved the easy halting problem, which is impossible according to the notes. Thus, the assumption that $P$ exists must have been false. \qed
+\end{mdframed}
+
+\end{Parts}
+
+
+ \Question{Printing All $x$ Where $M(x)$ Halts}
+
+Prove that it is possible to write a program $P$ which:
+  \begin{itemize}
+  \item takes as input $M$, a Java program,
+  \item runs forever, and prints out strings to the console,
+  \item for every $x$, if $M(x)$ halts, then $P(M)$ eventually prints out $x$,
+  \item for every $x$, if $M(x)$ does NOT halt, then $P(M)$ never prints out $x$.
+  \end{itemize}
+
+\begin{mdframed} \textbf{Solution} \\
+I assume that my set of all inputs to M are countable, and then define my program as follows: \\
+HaltPrinter(M) \\
+create an array of instances of computers \\
+loop, each time going to the next input for M \\
+add to your array a computer that runs $M(x_i)$ \\
+for each computer in array, run one line of the program
+loop through each computer in array \\ 
+if halted, print out result, and remove computer from array \qed
+\end{mdframed}
+
+\Question{Counting, Counting, and More Counting}
+
+The only way to learn counting is to practice, practice, practice, so
+here is your chance to do so.
+For this problem, you do not need to show work that justifies your answers.
+We encourage you to leave your answer as an expression (rather than
+trying to evaluate it to get a specific number).
+\begin{Parts}
+\Part How many 10-bit strings are there that contain exactly 4 ones?
+\begin{mdframed} \textbf{Solution} \\
+$\binom{10}{4}$
+\end{mdframed}
+
+\Part How many ways are there to arrange $n$ 1s and $k$ 0s into a sequence?
+\begin{mdframed} \textbf{Solution} \\
+$\binom{n+k}{k}$
+\end{mdframed}
+
+\Part A bridge hand is obtained by selecting 13 cards from a standard
+  52-card deck. The order of the cards in a bridge hand is
+  irrelevant. \\
+  How many different 13-card bridge hands are there? 
+  How many different 13-card bridge hands are there that contain
+  no aces? How many different 13-card bridge hands are there that contain
+  all four aces? How many different 13-card bridge hands are there that contain
+  exactly 6 spades?
+\begin{mdframed} \textbf{Solution} \\
+$\binom{52}{13}$
+$\binom{48}{13}$
+$\binom{48}{9}$
+$\binom{39}{7}\binom{13}{6}$
+\end{mdframed}
+
+\Part How many 99-bit strings are there that contain more ones than
+  zeros?
+\begin{mdframed} \textbf{Solution} \\
+$\sum^{99}_{i=50}\binom{99}{i}$
+\end{mdframed}
+ 
+\Part An anagram of FLORIDA is any re-ordering of the letters of FLORIDA, i.e., any
+  string made up of the letters F, L, O, R, I, D, and A, in any order.
+  The anagram does not have to be an English word. \\
+  How many different anagrams of FLORIDA are there? How many different anagrams 
+  of ALASKA are there? How many different anagrams of ALABAMA are there? 
+  How many different anagrams of MONTANA are there?
+\begin{mdframed} \textbf{Solution} \\
+FLORIDA: $7!$ \\
+ALASKA: $6!/3!$ \\
+ALABAMA: $7!/4!$ \\
+MONTANA: $7!/(2!2!)$
+\end{mdframed}
+
+\Part If we have a standard 52-card deck, how many ways are there to
+  order these 52 cards?
+\begin{mdframed} \textbf{Solution} \\
+52!
+\end{mdframed}
+
+\Part Two identical decks of 52 cards are mixed together, yielding a
+  stack of 104 cards.
+  How many different ways are there to order this stack of 104 cards?
+\begin{mdframed} \textbf{Solution} \\
+104!/2^{52}
+\end{mdframed}
+
+\Part We have 9 balls, numbered 1 through 9, and 27 bins.
+  How many different ways are there to distribute these 9 balls among
+  the 27 bins? Assume the bins are distinguishable (e.g., numbered 1
+  through 27).
+\begin{mdframed} \textbf{Solution} \\
+$27^9$
+\end{mdframed}
+
+\Part We throw 9 identical balls into 7 bins.
+  How many different ways are there to distribute these 9 balls among
+  the 7 bins such that no bin is empty? Assume the bins are
+  distinguishable (e.g., numbered 1 through 7).
+\begin{mdframed} \textbf{Solution} \\
+$\binom{7}{1} + \binom{7}{2}$
+\end{mdframed}
+
+\Part How many different ways are there to throw 9 identical balls
+  into 27 bins? Assume the bins are distinguishable (e.g., numbered 1
+  through 27).
+\begin{mdframed} \textbf{Solution} \\
+$\binom{35}{9}$
+\end{mdframed}
+
+\Part There are exactly 20 students currently enrolled in a class.
+  How many different ways are there to pair up the 20 students, so
+  that each student is paired with one other student?
+\begin{mdframed} \textbf{Solution} \\
+$20!/(2^{10}*10!)$
+\end{mdframed}
+
+\Part Let (1, 1) be the bottom-left corner and (8, 8) be the upper-right 
+corner of a chessboard. If you are allowed to move one square at a time and
+can only move up or right, what is the number of ways to go from the bottom-left corner to 
+the upper-right corner? 
+\begin{mdframed} \textbf{Solution} \\
+$\binom{14}{7}$
+\end{mdframed}
+
+\Part What is the number of ways to go from the bottom-left corner to 
+the upper-right corner of the chesssboard, if you must pass through the square 
+(6, 2), where $(i, j)$ represents the square in the $i$th row from the
+bottom and the $j$th column from the left?
+\begin{mdframed} \textbf{Solution} \\
+$\binom{6}{1}$
+$\binom{8}{2}$
+\end{mdframed}
+
+\Part How many solutions does $x_0 + x_1 + \cdots + x_k = n$ have, if each $x$ must be a non-negative integer?
+\begin{mdframed} \textbf{Solution} \\
+$\binom{n+k}{m}$
+\end{mdframed}
+
+\Part How many solutions does $x_0 + x_1 = n$ have, if each $x$ must be a \emph{strictly positive} integer?
+\begin{mdframed} \textbf{Solution} \\
+$n-1$
+\end{mdframed}
+
+\Part How many solutions does $x_0 + x_1 + \cdots + x_k = n$ have, if each $x$ must be a \emph{strictly positive} integer?
+\begin{mdframed} \textbf{Solution} \\
+$\binom{n-1}{k}$
+\end{mdframed}
+
+\end{Parts}
+
+
+\Question{Fermat's Necklace}
+
+  Let $p$ be a prime number and let $k$ be a positive integer.  We have an endless supply of beads. The beads come in
+  $k$ different colors. All beads of the same color are indistinguishable.
+
+  \begin{Parts}
+
+    \Part We have a piece of string. As a relaxing study break, we want to make a
+    pretty garland by threading $p$ beads onto the string.
+    How many different ways are there construct such a sequence of $p$ beads of $k$ different colors?
+\begin{mdframed} \textbf{Solution} \\
+$k^p$
+\end{mdframed}
+
+    \Part Now let's add a restriction.  We want our garland to be exciting and multicolored. Now
+    how many different sequences exist?
+    (Your answer should be a simple function of $k$ and $p$.)
+\begin{mdframed} \textbf{Solution} \\
+$k^p-k$
+\end{mdframed}
+
+    \Part Now we tie the two ends of the string together, forming a circular
+    necklace which lets us freely rotate the beads around the necklace.
+    We'll consider two necklaces equivalent if the sequence of colors on one
+    can be obtained by rotating the beads on the other.
+    (For instance, if we have $k=3$ colors---red (R), green (G), and
+    blue (B)---then the length $p = 5$ necklaces RGGBG, GGBGR, GBGRG, BGRGG, and GRGGB are all
+    equivalent, because these are cyclic shifts of each other.)
+
+    How many non-equivalent sequences are there now? Again, the $p$
+    beads must not all have the same color.
+    (Your answer should be a simple function of $k$ and $p$.)
+
+    [\textit{Hint}: What follows if rotating all the beads on a necklace to another
+      position produces an identical looking necklace?]
+\begin{mdframed} \textbf{Solution} \\
+$(k^p-k)/p$. Each garland maps to $p$ different necklaces. 
+\end{mdframed}
+
+    \Part Use your answer to part (c) to prove Fermat's little theorem.
+    (Recall that Fermat's little theorem says that if $p$ is prime and
+    $a \not\equiv 0 \pmod p$, then $a^{p-1} \equiv 1 \pmod p$.)
+\begin{mdframed} \textbf{Solution} \\
+We know from part c that $(k^p-k)/p$ must be an integer. $(k^p-k)/p=k(k^{p-1}-1)/p$. Because we assumed that $k \nmid p$, then it must be the case that $(k^{p-1}-1) \mid p \Rightarrow k^{p-1} \equiv 1 \mod p$. \qed
+\end{mdframed}
+
+    \end{Parts}
+
+%%%%%%%%%%%%%%%%%%%% QUESTIONS END HERE
+
+\end{document}

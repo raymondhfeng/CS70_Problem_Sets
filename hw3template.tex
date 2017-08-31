@@ -1,0 +1,359 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,setspace,tabto,fancyhdr,sectsty,graphicx}
+\usepackage[shortlabels]{enumitem}
+\usepackage[nobreak=true]{mdframed}
+\usepackage[left=1.25in,right=0.75in,top=1.25in,bottom=2.0in]{geometry}
+
+\newcommand*{\Question}[1]{\section{#1}}
+\newenvironment{Parts}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
+\newcommand*{\Part}{\item}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNCOMMENT NEXT LINE FOR SOLUTION BOXES
+% \newcommand*{\solnboxes}{}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Raymond Feng | 3032021864}
+
+%%%%%%%%%%%%%%%%%%%% hw number
+\newcommand*{\hwnum}{3}
+
+
+\ifdefined\solnboxes
+    \newenvironment{Answer}{\vspace{10pt}\begin{mdframed}\textbf{Solution}\\}{\end{mdframed}\vfill\pagebreak[3]}
+\else
+    \newenvironment{Answer}{\vspace{10pt}}{\vfill\pagebreak[3]}
+\fi
+\newcommand*{\MC}[1]{\multicolumn{1}{c}{#1}}
+\newcommand*{\N}{\mathbb{N}}
+\newcommand*{\Z}{\mathbb{Z}}
+\newcommand*{\Q}{\mathbb{Q}}
+\newcommand*{\R}{\mathbb{R}}
+\newcommand*{\C}{\mathbb{C}}
+
+\pagestyle{fancy}
+\headheight=75pt
+\sectionfont{\Large\fontfamily{lmdh}\selectfont}
+
+\renewcommand{\headrulewidth}{6pt}
+\chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
+\lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
+CS 70        \tabto{96pt} Discrete Mathematics and Probability Theory\smallskip\\
+Spring 2017  \tabto{96pt} Rao}
+\rhead{\huge     \fontfamily{lmdh}\selectfont     HW \hwnum}
+
+\lfoot{\small CS 70, Spring 2017, HW \hwnum}
+\begin{document}
+
+\Question{Sundry} 
+\vspace{5pt}
+%%%%%%%%%%%%%%%%%%%% SUNDRY PART HERE
+\begin{mdframed} \textbf{Solution} 
+\item \textit {I, Raymond Feng, certify that all solutions are entirely in my words and that I have not looked at another student's solutions. I have credited all external sources in this write up.}
+\item Sherman Luo email - shermanluo@berkeley.edu
+\item Credit for this LaTex template goes to anonymous CS70 Piazza user.
+\end{mdframed}
+%%%%%%%%%%%%%%%%%%%% END SUNDRY
+\vfill\pagebreak[3]
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%% QUESTIONS START HERE
+\Question{Leaves in a Tree}
+
+A {\em leaf} in a tree is a vertex with degree $1$.
+\begin{Parts}
+  \Part 
+  Prove that every tree on $n \ge 2$ vertices has at least two leaves.
+  
+\begin{mdframed} \textbf{Solution} \\
+Induction on number of vertices n. \\
+\textbf{Base Case: }$n=2$, then the two vertices must be connected by an edge, and there are two leaves. \\
+\textbf{Inductive Hypothesis: }For a tree T with $n=k$ vertices, where $k>2$, then T has at least two leaves. \\
+\textbf{Inductive Step: }For a graph with $k+1$ vertices, because the inductive hypothesis said that any arbitrary k vertex trees has at least two leaves, adding a vertex and connecting it to any current vertex will not result in loss of generality. Moreover, there are only two possibilities for adding a vertex. Either there is a net gain of a leaf, as the vertex connects to an existing vertex that is not a leaf, or there is no net gain of a leaf, as the new vertex connects to an old leaf. \qed
+\end{mdframed}
+  
+
+  \Part What is the maximum number of leaves in a tree with $n \ge 3$ vertices?
+
+\begin{mdframed} \textbf{Solution} \\
+Induction on number of vertices n. \\
+\textbf{Base Case: }For $n=3$, there can be max two leaves, with a center vertex and two leaves branching out from it. There are no other cases with more vertices.\\
+\textbf{Inductive Hypothesis: }For an arbitrary tree T with $n=k$ vertices, T can have a maxiumum of $k-1$ leaves.\\
+\textbf{Inductive Step: }Now consider $k+1$ vertices. Because in the inductive hypothesis we considered an arbitrary T, we can add on vertex to that graph, and connect it to any non leaf vertex in the original T. Adding a leaf, we have $k-1+1=k$ leaves. \qed
+\end{mdframed}
+
+
+\end{Parts}
+
+
+\Question{Build-Up Error?}
+
+What is wrong with the ``proof''?
+
+\begin{mdframed} \textbf{Solution} \\
+The "build up" error for this proof occurs in the inductive step, when the student assumes that all possible graphs that have $n+1$ and also satisfy the conditions are built by adding new vertex and connecting it to an an already "correct" graph. However, this is not true, as there are $n$ vertex graphs that do not satisfy the conditions, but when adding a vertex, results in a correct graph. \qed
+\end{mdframed}
+
+\Question{Graph Coloring}
+
+Prove that a graph with maximum degree at most $k$ is $(k+1)$-colorable.
+
+\begin{mdframed} \textbf{Solution} \\
+Prove by induction on degree k.\\
+\textbf{Base Case: }When $k=1$, each vertex is at most connected to one other vertex. Then, two colors will suffice, because you can color the neighboring vertex with the unused color. \\
+\textbf{Inductive Hypothesis: }If a graph G has maximum degree $k$, then G is colorable by $k+1$ colors. \\
+\textbf{Inductive Step: }If a graph G has max degree $k+1$, then there must be at least one vertex of degree $k+1$. Remove the vertex, and color the rest of G with $k+1$ colors using the inductive hypothesis. Then, put the removed vertex back and use the last unused color to color the removed vertices. \qed
+\end{mdframed}
+
+\Question{Edge Complement}
+
+\begin{Parts}
+\Part  Prove or disprove: if a graph $G$ has an Eulerian tour, then its \textbf{edge complement} graph has an Eulerian tour.
+
+\begin{mdframed} \textbf{Solution} \\
+True. For G to have an Eulerian tour, then all vertices of G must have an even degree, and G must be connected. All the edges in G have two vertices on the end of them. Take an arbitrary edge E. Both vertices of E have even degree, say 2d and 2e, including E itself. In G', because E now becomes a vertex, we know that it has $(2d-1)+(2e-1)$ edges leaving it, which is even. Then, all new vertices in G' must have even degree. Also, because the way that the edge complement is constructed, there is no way for a vertex in G' to be isolated, so the resulting graph must be connected. \qed
+\end{mdframed}
+
+\pagebreak  
+
+\Part  Prove or disprove: if a graph's \textbf{edge complement} graph $G'$ has an Eulerian tour, then graph $G$ has an Eulerian tour.
+
+\begin{mdframed} \textbf{Solution} \\
+False. Counterexample, the four complete graph G does not have an Eulerian tour, but it's edge complement G' does. \qed\\
+\includegraphics[scale=.1]{four-complete}
+\end{mdframed}
+
+\end{Parts}
+\pagebreak  
+
+\Question{Proofs in Graphs} 
+
+Please prove or disprove the following claims.
+
+\begin{Parts}
+\Part  Suppose we have $n$ websites ($n \geq 2$) such that for every pair of websites $A$ and $B$,
+either $A$ has a link to $B$ or $B$ has a link to $A$. Prove or disprove that
+there exists a website that is reachable from every other website by clicking at
+most 2 links. (\textit{Hint: Induction})
+
+\begin{mdframed} \textbf{Solution} \\
+\textbf{Lemma: }In a triangle, there are at least two vertices that can be reached by all other vertices in two clicks or less. \\
+Proof by induction on number of websites n. \\
+\textbf{Base Case: }For $n=2$, where there are websites A and B, either A can click to B or B can click to A. Whichever case it is, either A or B is the website that is reachable in at most two clicks. In this case, one click. \\
+\textbf{Inductive Hypothesis: }For $n=k$ websites, there exists a website that can be accessed by all other websites by at most two clicks. \\
+\textbf{Inductive Step: }Consider $k+1$ websites. By the inductive hypothesis, there is a subset of k websites where in those k, there is one website that all other websites can access in at most two clicks. Call this website W. Then, consider the $k+1$th website A, where for all other websites, either A can click to the website, or the website can click to A. A forms a triangle with W with all other vertices, and unless both other websites click to A, then A can reach W in two clicks. This is because by the lemma, in a triangle, there are at least two vertices that can be reached by all other vertices in two clicks or less. In the case where all triangles point to A, and A has no way of reaching W in two clicks via triangle, or at all for that matter, then redefine A as the designated website W, because A can be reached by all other websites in two clicks or less. In both cases, there will exist a vertex in the complete graph with $k+1$ vertices that can be reached in two clicks or less.\qed
+\end{mdframed}
+
+\pagebreak  
+
+\Part  
+In the lecture, we have shown that a connected undirected graph has an Eulerian tour if and only if every vertex has even degree.
+
+Prove or disprove that if a connected graph $G$ on $n$ vertices has exactly $2d$ vertices of
+odd degree, then there are $d$ walks ($d>0$) that \emph{together} cover all the edges of
+$G$ (i.e., each edge of $G$ occurs in exactly one of the $d$ walks; and each of
+the walks should not contain any particular edge more than once).
+
+\begin{mdframed} \textbf{Solution} \\
+Pair up the 2d odd degree vertices into d pairs, and find a path between $d-1$ of the pairs. This removes $d-1$ edges from the graph, as well as an even amount of edges that were used to pair the $d-1$ pairs, such as if there were to be an even degree vertex in between a pair of odd degree vertices. Next, find a path between the last pair of odd degree vertices, and when the last odd vertex is reached, there only remain even degree vertices as well as a connected graph. Before ending the walk, finish the untravelled edges with an Eulerian tour of the untravelled edges. We can do this because there are an even number of edges left in a connected graph. Then, we have $d-1+1=d$ edge disjoint walks that covered all the edges of the graph in question. \qed
+\end{mdframed}
+
+\end{Parts}
+
+\pagebreak
+
+\Question {Triangulated Planar Graph}
+In this problem you will prove that every triangulated planar graph (every face has 3 sides; that is, every face has three edges bordering it, including the unbounded face)
+contains either (1) a vertex of degree 1, 2, 3, 4, (2) two degree 5 vertices 
+which are connected together, or (3) a degree 5 and a degree 6 vertices which are 
+connected together. Justify your answers.
+
+\begin{Parts}
+\Part Place a charge on each vertex $v$ of value $6-\operatorname{degree}(v)$. What is
+the sum of the charges on all the vertices?
+(\textit{Hint}: Use Euler's formula and the fact that the planar graph is
+triangulated.)
+
+\begin{mdframed} \textbf{Solution} \\
+$v+f=e+2$. Euler's formula for planar graphs. \\
+Every face has three sides: \\
+$3f=2e$ \\
+Multiply Euler's formula by 3: \\
+$3v+3f=3e+6$\\
+Substituting earlier formula: \\
+$3v+2e=3e+6$ \\
+$v=(e/3)+2$\\
+Shift to summation in question: \\
+$\sum_{v} 6-deg(v)$ \\
+$=\sum_{v} 6 - \sum_{v} deg(v)$\\
+Using property of summation and the fact that the sum of the degrees of the vertices are twice the edges: \\
+$=6v-2e$ \\
+Substitute earlier equation for v: \\
+$=6((e/3)+2)-2e$ \\
+$=2e+12-2e$ \\
+$=12$ \\
+\end{mdframed}
+
+\Part What is the charge of a degree $5$ vertex and of a degree $6$ vertex?
+
+\begin{mdframed} \textbf{Solution} \\
+1 and 0, respectively.
+\end{mdframed}
+
+\pagebreak 
+
+\Part Move $1/5$ charge from each degree $5$ vertex to each of its negatively charged 
+neighbors. Conclude the proof in the case where there is a degree $5$
+vertex with positive remaining charge. 
+
+\begin{mdframed} \textbf{Solution} \\
+A five vertex with remaining charge after discharging implies that it is connected to a neighboring vertex of degree 6 or less. If the connected vertex is degree 6, then condition 3 is satisfied. If the neighboring vertex is degree 5, then condition 2 is satisfied. Otherwise, if the neighboring vertex is degree 1,2,3, or 4, then condition 1 is satisfied.
+\end{mdframed}
+
+\Part If no degree $5$ vertices have positive charge after discharging, 
+does there exist a vertex with positive charge after discharging?
+If there is such a vertex, what are possible degrees of that vertex?
+
+\begin{mdframed} \textbf{Solution} \\
+7. \\
+$-1+7(1/5)=2/5$\\
+7 is the only degree with this property.
+\end{mdframed}
+
+\Part 
+Suppose there exists a degree $7$ vertex with positive charge after the discharging process of degree 5 vertices.
+How many neighbors of degree 5 might it have?
+\begin{mdframed} \textbf{Solution} \\
+At least 6, as $-1+(6/5)=(1/5)$ \\
+Any less and the degree 7 vertex would still be non positive. 
+\end{mdframed}
+
+\Part Continuing the last question. Since the graph is triangulated,
+  are two of these degree $5$ vertices adjacent?
+
+\begin{mdframed} \textbf{Solution} \\
+Yes, two degree five vertices must be adjacent. Each "branch" of the star that branches out of the degree 7 vertex must be connected to another vertex that is at the end of the branch of the degree seven vertex, by definition of triangulated graph. If any two of the six degree five vertices are connected, then we are done. However, consider the case where the non degree five vertex V is connected to all the other degree five vertices. Say V is degree 7, and all six of its available degrees were used to connect to all six of the degree five vertices. However, this is impossible, as the two most adjacent to V would connect without a problem, and the two adjacent after that would connect fine as well. However, the two outer adjecent degree five vertices connected to V wrap around and cut off the inner degree five vertices. Because this is a planar graph, that is impossible. Two degree five vertices must be adjacent.  
+\end{mdframed}
+
+\pagebreak  
+
+\Part Finish the proof from the facts you obtained from the previous
+  questions.
+\begin{mdframed} \textbf{Solution} \\
+\textbf{Proof by Cases: }\\
+If all vertices are less than degree five, then condition one is satisfied, and we are done. If all degrees are six or greater, that is impossible, as the sum of the charges is positive. Then, all that is left for us to consider is all cases with vertices of degree five. \\
+\textbf{Case 1: }There is at least one degree five vertex with positive remaining charge. Part c proved this for us. \\
+\textbf{Case 2: }There is no degree five vertex with positive remaining charge. Parts $d-f$ shows that there must be two degree 5 vertices connected together, satisfying the second condition, and finishing the proof. \qed
+\end{mdframed}
+
+\end{Parts}
+
+
+\Question{Hypercube Routing}
+
+Recall that an $n$-dimensional hypercube contains $2^n$ vertices, each labeled
+with a distinct $n$ bit string, and two vertices are adjacent if and only if
+their bit strings differ in exactly one position.
+
+\begin{Parts}
+  \Part The hypercube is a popular architecture for parallel computation. Let
+  each vertex of the hypercube represent a processor and each edge represent a
+  communication link. Suppose we want to send a packet from vertex $x$ to vertex
+  $y$. Consider the following ``bit-fixing'' algorithm:
+  \begin{quote} In each step, the current processor compares its address to the
+    destination address of the packet. Let's say that the two addresses match up
+    to the first $k$ positions. The processor then forwards the packet and the
+    destination address on to its neighboring processor whose address matches
+    the destination address in at least the first $k+1$ positions. This process
+    continues until the packet arrives at its destination.
+ \end{quote}
+ Consider the following example where $n=4$: Suppose that the source vertex is
+ $(1001)$ and the destination vertex is $(0100)$. Give the sequence of
+ processors that the packet is forwarded to using the bit-fixing algorithm.
+
+\begin{mdframed} \textbf{Solution} \\
+$\{(1001),(0001),(0101),(0100)\}$
+\end{mdframed}
+
+\pagebreak   
+
+ \Part The \emph{Hamming distance} $H(x, y)$ between two $n$-bit strings $x$ and
+ $y$ is the number of bit positions where they differ. Show that for an
+ arbitrary source vertex and arbitrary destination vertex, the number of edges
+ that the packet must traverse under this algorithm is the Hamming distance
+ between the $n$-bit strings labeling source and destination vertices.
+
+\begin{mdframed} \textbf{Solution} \\
+From the bit fixing procedure from part a, the number of differences in the bit strings determines the number of iterations it takes for the procedure to terminate. Because each iteration results in the change in one bit of the bit string, each iteration is analogous to traversing an edge on the corresponding hypercube, which is the Hamming distance. \qed
+\end{mdframed}
+
+ \Part Consider the following example where $n=3$: Suppose that $x$ is $(110)$
+ and $y$ is $(011)$. What is the length of the shortest path between $x$ and
+ $y$?  What is the set of all vertices and the set of all edges that lie on
+ shortest paths between $x$ and $y$? Do you see a pattern?  You do not need to
+ prove your answer here -- you'll provide a general proof in part (d).
+
+\begin{mdframed} \textbf{Solution} \\
+\textbf{Edges: }$\{[(110),(010)],[(010),(011)],[(110),(111)],[(111),(011)]\}$ \\
+\textbf{Vertices: }$\{(110),(011),(010),(111)\}$ \\
+The length of the shortest path is two edges. The set of all the vertices and edges on the shortest paths represent the edges and vertices of the two dimensional hypercube, except with an extra one in the middle. The pattern is that the set of all vertices and edges on the shortest paths between two bit strings with n differences is the set of all edges and vertices of the n-dimensional hypercube. 
+\end{mdframed}
+
+\pagebreak  
+
+ \Part Answer the last question for an arbitrary pair of vertices $x$ and $y$ in
+ the hypercube. Can you describe the set of vertices and the set of edges that
+ lie on shortest paths between $x$ and $y$? Prove that your answers are
+ correct. ({\em Hint:} Consider the bits where $x$ and $y$ differ.)
+
+\begin{mdframed} \textbf{Solution} \\
+\textbf{Claim: }For arbitrary bit strings x and y of the same length, the set of vertices and edges of all the 
+shortest paths from x to y represent the set of all vertices and edges in the $n=H(x,y)$ dimension hypercube. H
+(x,y) is the Hamming distance between two arbitrary points x and y. \\
+\textbf{Algorithm: }I define algorithm AllPaths(x,y,SET), which takes in two arbitrary bit strings x and y of 
+the same length, and returns SET, which is the set of all distinct vertices and edges that are on the set of all 
+shortest paths from x to y. The algorithm roughly works recursively as follows: \\
+Base case is when x is y. Add the position of x to SET, and return SET. \\
+Otherwise, there are still bits differing. For each differing bit, make H(x,y) recursive calls to AllPaths, 
+changing the designated bit in x, and adding that traversed edge and vertex to SET. Add all the recursive calls 
+together, and the result is the set of all vertices and edges touched by the shortest path from x to y. \\
+\textbf{Base Case: }For $n=1$, all bit strings with Hamming distance 1 must differ by only one bit. The only 
+possible scenario is for the bits $x=(1),y=(0)$ or vice versa. Then, the path from 0 to 1 or 1 to 0 must have 
+only one edges, and necessarily be the one dimesional hypercube. \\
+\textbf{Inductive Hypothesis: }For arbitrary bit strings x and y of the same length with %k=H(x,y)$, then the 
+set of vertices and edges of all the shortest paths from x to y represent the set of all vertices and edges in 
+the k dimensional hypercube. In other words, AllPaths(x,y,SET) returns the set of edges and vertices in the k 
+dimensional hypercube.\\
+\textbf{Inductive Step: }For arbitrary bit strings x and y of $k+1=H(x,y)$, consider the added differing bit. 
+First, consider the case where the new differing bit is the first changed, and x becomes x'. By the inductive 
+hypothesis, AllPaths(x',y'SET) returns the set of vertices and edges of the k dimensional hypercube. This case 
+can be seen as analogous to the 0-subcube of the $k+1$ dimensional hypercube. Then, consider the case where the 
+new differing bit is not changed, and another bit B is changed. Then again, by the inductive hypothesis, 
+AllPaths(x',y',SET) returns the set of vertices and edges of the k dimensional hypercube. This case can be seen 
+as analogous to the 1-subcube of the $k+1$ dimensional hypercube. Because at any point during the algorithm, the 
+new differing bit can be changed to shift the bit string from the 1-subcube to the 2-subcube, the corresponding 
+edges of the two subcubes are also connected. This satisfies all edges and vertices of the $k+1$ dimensional 
+hypercube. \qed
+\end{mdframed}
+
+\pagebreak  
+
+ \Part Traced graph:
+
+ \begin{center}
+ % image in butterfly-answer.png or similar, in the same directory
+ % the easiest way to do this is probably actually just doing this in an image
+ % editor or on paper.
+    \includegraphics[scale=.2]{butterfly-answer}
+ \end{center}
+
+ \begin{Answer}
+ 
+ \end{Answer}
+
+\end{Parts}
+
+%%%%%%%%%%%%%%%%%%%% QUESTIONS END HERE
+
+\end{document}

@@ -1,0 +1,329 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,setspace,tabto,fancyhdr,sectsty,mathtools}
+\usepackage[shortlabels]{enumitem}
+\usepackage[nobreak=true]{mdframed}
+\usepackage[left=1.25in,right=0.75in,top=1.25in,bottom=2.0in]{geometry}
+
+\newcommand*{\Question}[1]{\section{#1}}
+\newenvironment{Parts}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
+\newcommand*{\Part}{\item}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% UNCOMMENT NEXT LINE FOR SOLUTION BOXES
+\newcommand*{\solnboxes}{}
+
+%%%%%%%%%%%%%%%%%%%% name/id
+\rfoot{\small Raymond Feng | 3032021864}
+
+%%%%%%%%%%%%%%%%%%%% hw number
+\newcommand*{\hwnum}{10}
+
+
+\ifdefined\solnboxes
+    \newenvironment{Answer}{\vspace{10pt}\begin{mdframed}\textbf{Solution}\\}{\end{mdframed}\vfill\pagebreak[3]}
+\else
+    \newenvironment{Answer}{\vspace{10pt}}{\vfill\pagebreak[3]}
+\fi
+\newcommand*{\MC}[1]{\multicolumn{1}{c}{#1}}
+\newcommand*{\N}{\mathbb{N}}
+\newcommand*{\Z}{\mathbb{Z}}
+\newcommand*{\Q}{\mathbb{Q}}
+\newcommand*{\R}{\mathbb{R}}
+\newcommand*{\C}{\mathbb{C}}
+\newcommand*{\GF}{\text{GF}}
+\newcommand*{\E}{\textbf{E}}
+\newcommand*{\Var}[1]{\text{Var}(#1)}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\pagestyle{fancy}
+\headheight=75pt
+\sectionfont{\Large\fontfamily{lmdh}\selectfont}
+
+\renewcommand{\headrulewidth}{6pt}
+\chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
+\lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
+CS 70        \tabto{96pt} Discrete Mathematics and Probability Theory\smallskip\\
+Spring 2017  \tabto{96pt} Rao}
+\rhead{\huge     \fontfamily{lmdh}\selectfont     HW \hwnum}
+
+\lfoot{\small CS 70, Spring 2017, HW \hwnum}
+\begin{document}
+
+\Question{Sundry} 
+\vspace{10pt}
+%%%%%%%%%%%%%%%%%%%% SUNDRY PART HERE
+\begin{mdframed} \textbf{Solution} 
+\item \textit {I, Raymond Feng, certify that all solutions are entirely in my words and that I have not looked at another student's solutions. I have credited all external sources in this write up.}
+\item Sherman Luo email - shermanluo@berkeley.edu
+\item Credit for this LaTex template goes to anonymous CS70 Piazza user.
+\end{mdframed}
+%%%%%%%%%%%%%%%%%%%% END SUNDRY
+\vfill\pagebreak[3]
+
+%%%%%%%%%%%%%%%%%%%% QUESTIONS START HERE
+\Question{How Many Kings?}
+
+Suppose that you draw 3 cards from a standard deck without replacement. Let $X$ denote the number of kings you draw.
+\begin{enumerate}[(a)]
+    \item What is $\Pr(X = 0)$?
+    \begin{Answer}
+$\Pr(X=0)=\Pr(\text{Draw 0 Kings})=\frac{48}{52}*\frac{47}{51}*\frac{46}{50}$
+    \end{Answer}
+    \item What is $\Pr(X = 1)$?
+    \begin{Answer}
+$\Pr(X=1)=\Pr(\text{Draw 1 King})=\frac{4}{52}*\frac{48}{51}*\frac{47}{50}*\binom{3}{1}$
+    \end{Answer}
+    \item What is $\Pr(X = 2)$?
+    \begin{Answer}
+$\frac{4}{52}*\frac{3}{51}*\frac{48}{50}*\binom{3}{2}$
+    \end{Answer}
+    \item What is $\Pr(X = 3)$?
+    \begin{Answer}
+$\frac{4}{52}*\frac{3}{51}*\frac{2}{50}$
+    \end{Answer}
+    \item Do the answers you computed in parts (a) through (d) add up to 1, as expected?
+    \begin{Answer}
+$\Pr(X=0)+\Pr(X=1)+\Pr(X=2)+\Pr(X=3)$\\
+$=\frac{48}{52}*\frac{47}{51}*\frac{46}{50}+\frac{4}{52}*\frac{48}{51}*\frac{47}{50}*\binom{3}{1}+\frac{4}{52}*\frac{3}{51}*\frac{48}{50}*\binom{3}{2}+\frac{4}{52}*\frac{3}{51}*\frac{2}{50}$\\
+$=\frac{48*47*46+4*48*47*3+4*3*48*3+4*3*2}{52*51*50}$\\
+$=\frac{58*48*47+36*48+24}{52*51*50}=1$
+    \end{Answer}
+    \item Compute $\E(X)$ from the definition of expectation.
+    \begin{Answer}
+$\E(X)=0*\Pr(X=0)+1*\Pr(X=1)+2*\Pr(X=2)+3*\Pr(X=3)$\\
+$=\frac{12*48*47+72*48+72}{52*51*50}\approx0.231$
+    \end{Answer}
+    \item Suppose we define indicators $X_i$, $1 \leq i \leq 3$, where $X_i$ is the indicator variable that equals 1 if the $i$th card is a king and 0 otherwise. Compute $\E(X)$.
+    \begin{Answer}
+$\Pr(X_1)=\frac{4}{52}$\\
+$\Pr(X_2)=\Pr(X_2|X_1)\Pr(X_1)+\Pr(X_2|X_1)\Pr(X_1)$\\
+$=\frac{4}{52}*\frac{3}{51}+\frac{48}{52}*\frac{4}{51}$\\
+$\Pr(X_3)=\Pr(X_3|\neg X_1\cap X_2)\Pr(\neg X_1 \cap X_2)+\Pr(X_3|X_1\cap \neg X_2)\Pr(X_1 \cap \neg X_2)+\Pr(X_3|\neg X_1\cap \neg X_2)\Pr(\neg X_1 \cap \neg X_2)+\Pr(X_3|X_1\cap X_2)\Pr(X_1 \cap X_2)$\\
+$=\Pr(X_3)=\Pr(X_3 \cap \neg X_1\cap X_2)+\Pr(X_3 \cap X_1\cap \neg X_2)+\Pr(X_3 \cap \neg X_1\cap \neg X_2)+\Pr(X_3 \cap X_1\cap X_2)$\\
+$=\frac{4}{52}*\frac{3}{51}*\frac{2}{50}+\frac{4}{52}*\frac{48}{51}*\frac{3}{50}+\frac{4}{52}*\frac{48}{51}*\frac{3}{50}+\frac{48}{52}*\frac{47}{51}*\frac{4}{50}$\\
+$=\frac{24+12*48+12*48+13*48*47}{50*51*52} \approx 0.231$
+    \end{Answer}
+    \item Are the $X_i$ indicators independent? How does this affect your answer to part (g)?
+    \begin{Answer}
+The $X_i$ indicator random variables are not independent, but this does not affect the answer because we did not use independence anywhere. Linearity of expectation holds even without independence. 
+    \end{Answer}
+\end{enumerate}
+
+
+\Question{Sisters}
+
+Consider a family with $n$ children, each with a 50\% chance of being male or female. Let $X$ be the total number of sisters that the male children have, and let $Y$ be the total number of sisters that the female children have (for example, if $n = 3$ and there are two boys and one girl, then $X = 2$ and $Y = 0$). Find expressions for $\E(X)$ and $\E(Y)$ in terms of $n$. Do we expect that boys have more sisters or girls have more sisters?
+
+\textit{[Hint: Define a random variable $B$ to denote the number of boys, find an expression for $X$ as a function of $B$, and apply linearity of expectation. Use a similar approach for girls.]}
+
+\begin{Answer}
+Define $X$ as the total sisters the brothers have, and $Y$ as the total sisters the sisters have, and $B$ as the number of brothers. Then, we have $\E(B^2)=\Var{B}+(\E(B))^2=\frac{n}{4}+\frac{n^2}{4}$. Then, we can use this to calculate $\E(X)=\E(Bn-B^2)=\E(Bn)-\E(B^2)=n*\frac{n}{2}-\frac{n^2}{4}-\frac{n}{4}=\frac{n^2}{4}-\frac{n}{4}$. Similarly, we can calculate $\E(Y)=\E((n-B)(n-B-1)=\E(n^2-2nB-n+B^2+B)=n^2-2n\E(B)-n+\E(B^2)+\E(B)=n^2-2n(\frac{n}{2})-n+\frac{n^2}{4}+\frac{n}{4}+\frac{n}{2}=n^2-n^2-n+\frac{n^2}{4}+\frac{3n}{4}=\frac{-n^2}{2}+\frac{3n}{4}+\frac{n^2}{4}-\frac{n}{4}=\frac{n^2}{4}-\frac{n}{4}$ \\
+According to our calculations, both the boys and girls have the same amount of sisters, which I suppose makes sense because of the edge cases. For example, in most situations, it is the case that the boys have $n-B$ more total sisters than the girls. However, the edge case were there are no boys "cancels out" the other cases, and we end up with the same amount of total sisters for both brothers and sisters on average.
+\end{Answer}
+
+\Question{Unbiased Variance Estimation}
+
+We have a random variable $X$ and want to estimate its variance,
+$\sigma^2$ and mean, $\mu$, by sampling from it.  In this problem, we
+will derive an ``unbiased estimator'' for the variance.
+
+\begin{Parts}
+  \Part We define a random variable $Y$ that corresponds to drawing $n$
+    values from the distribution for $X$ and averaging, or $Y =
+    (X_1 + \ldots + X_n)/n$.  What is $\E(Y)$?  Note that if
+    $\E(Y) = \E(X)$ then $Y$ is an unbiased estimator of $\mu = 
+    \E(X)$. {\em Hint: This should not be difficult.}
+  \begin{Answer}
+$\E(Y)=\frac{1}{n}\E(X_1+...+X_n)=\frac{1}{n}(n)\E(X)=\E(X)$
+  \end{Answer}
+
+  \Part Now let's assume the actual mean is $0$ as variance doesn't
+    change when one shifts the mean.
+
+  Before attempting to define an estimator for variance, show that
+  $\E(Y^2) = \sigma^2/n$.  
+  \begin{Answer}
+$\E(Y^2)=\E((\frac{X_1+...+X_n}{n})^2)=\frac{1}{n^2}\E(\sum_{i,j}X_iX_j)=\frac{1}{n^2}\E(\sum_{i \neq j}X_iX_j+\sum_{i=j}X_iX_j)$. When $i \neq j$, then $X_i$ and $X_j$ are independent, which means that $\E(X_iX_j)=\E(X_i)\E(X_j)$. And because the mean is defined as zero in the problem statement, then $\E(X_i)\E(X_j)=0$. Then our expression becomes $\frac{1}{n^2}\E(nX^2)=\frac{\E(X^2)}{n}=\frac{(\sigma)^2}{n}$. \qed
+  \end{Answer}
+
+  \Part In practice, we don't know the mean of $X$ so following
+    part (a), we estimate it as $Y$. With this in mind, we consider the random variable $Z =
+    \sum_{i=1}^n (X_i -Y)^2$.  What is $\E(Z)$?
+  \begin{Answer}
+$\E(Z)=\E(\sum_iX_i^2-\sum_i2X_iY+\sum_iY^2)$\\
+$=\E(\sum_iX_i^2-2Y\sum_iX_i+nY^2)$\\
+$=\E(\sum_iX_i^2-2YnY+nY^2)$\\
+$=\E(\sum_iX_i^2-2nY^2+nY^2)$\\
+$=\E(\sum_iX_i^2)-\E(nY^2)$\\
+$=\E(\sum_iX_i^2)-n\E(Y^2)$\\
+$=n\sigma^2+n\mu^2-n(\frac{\sigma^2}{n}+\mu^2)$\\
+$=n\sigma^2-\sigma^2$
+  \end{Answer}
+
+  \Part What is a good unbiased estimator for the $\Var{X}$?
+  \begin{Answer}
+$\frac{\E(Z)}{n-1}$
+  \end{Answer}
+
+  \Part How does this differ from what you might expect? Why?
+  (Just tell us your intuition here, it is all good!)
+  \begin{Answer}
+I suppose it is weird because of the $n-1$ as opposed to just being $n$.
+  \end{Answer}
+\end{Parts}
+
+
+\Question{Markov Bound for Coupon Collectors} 
+Suppose you are trying to collect a set of $n$ different baseball cards. You get the cards by buying boxes of cereal: each box contains exactly one card, and it is equally likely to be any of the $n$ cards. You are interested in finding $m$, a lower bound on the number of boxes you should buy to ensure that the probability of you collecting all $n$ cards is at least $\frac{1}{2}$. In class, we used the Union Bound to show that it suffices to have $m \geq n \ln (2n)$.
+
+Use Markov's Inequality to find a different (weaker) lower bound on $m$.
+
+\begin{Answer}
+$\Pr(X \geq m) \leq \frac{\E(X)}{m}$\\
+$1-\Pr(X \geq m) \geq 1-\frac{\E(X)}{m}$\\
+$\Pr(X<m) \geq 1 - \frac{\E(X)}{m}$\\
+$\Pr(X<m) \geq 1 - \frac{nH_n}{m} \geq \frac{1}{2}$\\
+$1 - \frac{nH_n}{m} \geq \frac{1}{2}$\\
+$-\frac{nH_n}{m} \geq -\frac{1}{2}$\\
+$\frac{nH_n}{m} \leq \frac{1}{2}$\\
+$m \geq 2nH_n$ \qed
+\end{Answer}
+
+\Question{Safeway Monopoly Cards} 
+It's that time of the year again - Safeway is offering its Monopoly Card promotion. Each time you visit Safeway, you are given one of $n$ different Monopoly Cards with equal probability. You need to collect them all to redeem the grand prize.
+
+\begin{enumerate}[(a)]
+    \item Let $X$ be the number of visits you have to make before you can redeem the grand prize. Show that $\Var{X} = n^2\left(\sum_{i=1}^n i^{-2}\right) - \E(X)$. \textit{[Hint: Does this remind you of a particular problem? What is the expectation for this problem?]}
+    \begin{Answer}
+Because $X$ is similar to the coupon collectors scenario, we can simply say $\E(X)=nH_n$. Then, $\E(X)^2=n^2\sum_{i \neq j}^n\frac{1}{ij}+n^2\sum_{i=1}^n\frac{1}{i^2}$. Now we define the indicator random variables $X_i$ as the number of cards it takes to get the ith unique card after getting the $i-1$th unique card, and we calculate $\E(X^2)=\sum_{i=1}^n\E(X_i^2)+\sum_{i \neq j}\E(X_iX_j)$. Because $X_i$ follows a geometric distribution with parameter $p_i=\frac{n-i+1}{n}$, then we know that $\E(X_i^2)=\Var{X_i}+E(X_i)^2=\frac{1-p_i}{p_i^2}+\frac{1}{p_i^2}=\frac{2}{p_i^2}-\frac{1}{p_i}=2\frac{n^2}{(n-i+1)^2}-\frac{n}{n-i+1}$. Now returning to our previous calculation \\ $\E(X^2)=\sum_{i=1}^n\E(X_i^2)+\sum_{i \neq j}\E(X_iX_j)$\\
+$=2n^2\sum_{i=1}^n\frac{1}{(n-i+1)^2}-n\sum_{i=1}^n\frac{1}{n-i+1}+n^2\sum_{i \neq j}\E(X_i)\E(X_j)$\\
+$=\sum_{i=1}^n\E(X_i^2)+\sum_{i \neq j}\E(X_iX_j)$\\
+$=2n^2\sum_{i=1}^n\frac{1}{(n-i+1)^2}-n\sum_{i=1}^n\frac{1}{n-i+1}+n^2\sum_{i \neq j}\frac{1}{ij}$\\
+Then, $\E(X^2)-\E(X)^2=2n^2\sum_{i=1}^n\frac{1}{i^2}-n\sum_{i=1}^n\frac{1}{i}+n^2\sum_{i \neq j}\frac{1}{ij}-n^2\sum_{i \neq j}\frac{1}{ij}-n^2\sum_{i=1}^n\frac{1}{i^2}$\\
+$=n^2\sum_{i=1}^n\frac{1}{i^2}-n\sum_{i=1}^n\frac{1}{i}=n^2\sum_{i=1}^n\frac{1}{i^2}-\E(X)$. \qed
+    \end{Answer}
+  
+    \item The series $\sum_{i=1}^\infty i^{-2}$ converges to the constant value $\pi^2/6$. Using this fact and Chebyshev's Inequality, find a lower bound on $\beta$ for which the probability you need to make more than $\E(X) + \beta n$ visits is less than $1/100$, for large $n$. \textit{[Hint: Use the approximation $\sum_{i = 1}^n i^{-1} \approx \ln n$ as $n$ grows large.]}
+    \begin{Answer}
+$\Pr(|X-\mu| \geq n\beta) \leq \frac{\Var{X}}{(n\beta)^2}=\frac{n^2(\sum_{i=1}^n\frac{1}{i^2})-\E(X)}{\beta^2n^2}<p$ \\
+$\frac{n^2(\sum_{i=1}^n\frac{1}{i^2})-nH_n}{\beta^2n^2}<p$\\
+$\frac{n(\sum_{i=1}^n\frac{1}{i^2})-H_n}{n}<p\beta^2$\\
+$\sqrt{\frac{n(\sum_{i=1}^n\frac{1}{i^2})-H_n}{np}}<\beta$\\
+$\sqrt{\frac{100(n(\frac{\pi}{6})-H_n)}{n}}<\beta$\\
+    \end{Answer}
+\end{enumerate}
+
+\Question{Dice}
+In this problem, let $X_1, X_2, \dots X_n$ each denote the outcomes of standard six-sided dice rolls. Let $A$ denote the average of the outcomes $(\sum_{i = 1}^n X_i)/n$.
+\begin{enumerate}[(a)]
+  \item For $n = 100$, find some $a$ and $b$ such that $A$ is in the interval $[a, b]$ with probability at least 90\% (Don't use trivial intervals like [1, 6]).
+  \begin{Answer}
+$\Pr(|A-\E(A)| \geq \alpha) \leq \frac{\Var{A}}{\alpha^2} \leq \frac{1}{10}$\\
+$\Var{A}=\E(A^2)-\E(A)^2$\\
+$\E(A)=\E(\frac{\sum_{i=1}^nX_i}{n})=\frac{1}{n}\sum_{i=1}^n\E(X_i)=\frac{7}{2}$\\
+$\E(A^2)=\E((\frac{\sum_{i=1}^nX_i}{n})^2)=\frac{1}{n^2}\E((\sum_{i=1}^nX_i)^2)$\\
+$=\frac{1}{n^2}\E(\sum_{i=1}^nX_i^2+\sum_{i \neq j}X_iX_j)=\frac{1}{n^2}(\sum_{i=1}^n\E(X_i^2)+\sum_{i \neq j}\E(X_iX_j))$\\
+$\E(X_i^2)=\frac{1}{6}(1+4+9+16+25+36+49+36)=\frac{91}{6}$\\
+$\E(A^2)=\frac{1}{n^2}(n\frac{91}{6}+n(n-1)(\frac{7}{2})^2)$\\
+$\Var{A}=\frac{1}{n^2}(n\frac{91}{6}+n(n-1)(\frac{7}{2})^2)-(\frac{7}{2})^2=\frac{1}{n}(\frac{91}{6}+(n-1)(\frac{7}{2})^2)-(\frac{7}{2})^2$\\
+$\frac{\Var{A}}{\alpha^2} \leq \frac{1}{10}$\\
+$\alpha \geq \sqrt{10\Var{A}}$\\
+$\alpha \geq \sqrt{\frac{10}{100}(\frac{91}{6}+(n-1)(\frac{7}{2})^2)-10\frac{49}{4}}$\\
+$\alpha \geq 0.54$\\
+$[a,b]=[\frac{7}{2}-\alpha,\frac{7}{2}+\alpha]$
+  \end{Answer}
+
+  \item For $n = 30$, find a lower bound on Pr[$3\leq A\leq 4$].
+  \begin{Answer}
+$\Pr(|A-\mu| \geq 0.5) \leq \frac{\Var{X}}{0.5^2}$\\
+$\Pr(|A-\mu|<0.5) \geq 1-\frac{\Var{A}}{0.5^2}=1-\frac{\frac{1}{n}(\frac{91}{6}+(n-1)(\frac{7}{2})^2)}{0.5^2}=1-\frac{\frac{1}{30}(\frac{91}{6}+(29)(\frac{7}{2})^2)}{0.5^2}=0.611$\\
+$\Pr(|A-\mu|<0.5) \geq 0.611$
+
+  \end{Answer}
+
+  \item Find the minimum $n$ for which you can guarantee that $A$ is within the range [3, 4] with at least 99\% probability.
+  \begin{Answer}
+$n \geq \frac{\sigma^2}{\mu^2}\frac{1}{\epsilon^2\sigma}=\frac{\sigma^2}{\mu^2}\frac{1}{\epsilon^2\sigma}=\frac{\sigma}{\mu^2\epsilon^2}=\frac{\sqrt{\Var{A}}}{\mu^2\epsilon^2}$\\
+$\mu^2\epsilon^2 \geq \frac{\sqrt{\frac{1}{n}(\frac{91}{6}+(n-1)(\frac{7}{2})^2-(\frac{7}{2})^2
+)}}{n}$\\
+$\mu^4\epsilon^4 \geq \frac{\frac{1}{n}(\frac{91}{6}+(n-1)(\frac{7}{2})^2-(\frac{7}{2})^2)}{n^2} = \frac{1}{n^3}(\frac{91}{6}+(n-1)(\frac{7}{2})^2)-\frac{1}{n^2}(\frac{7}{2})^2$\\
+$=\frac{91}{6n^3}+\frac{1}{n^3}(n-1)(\frac{7}{2})^2-\frac{1}{n^2}(\frac{7}{2})^2=\frac{91}{6n^3}+(\frac{7}{2})^2\frac{1}{n^2}-\frac{1}{n^3}(\frac{7}{2})^2-\frac{1}{n^2}(\frac{7}{2})^2=\frac{\frac{91}{6}}{n^3}-\frac{\frac{49}{4}}{n^3}=\frac{\frac{35}{12}}{n^3}$\\
+$\mu^4\epsilon^4\sigma \geq \frac{\frac{35}{12}}{n^3}$\\
+$n^3 \geq \frac{35}{12}\frac{1}{\mu^4\epsilon^4}$\\
+$n \geq \sqrt{\frac{35}{12}}\frac{1}{\mu^2\epsilon^2}$\\
+$n \geq \frac{1}{(\frac{7}{2})^2(\frac{1}{100})^2}(\frac{35}{12})^{\frac{1}{3}} \approx 1166.34$\\
+$n=1167$ rolls for $A$ in range $[3,4]$ with $0.99$ certainty.
+  \end{Answer}
+\end{enumerate}
+
+\Question{Practical Confidence Intervals}
+\begin{enumerate}[(a)]
+  \item It's New Year's Eve, and you're re-evaluating your finances for the next year. Based on previous spending patterns, you know that you spend \$1500 per month on average, with a standard deviation of \$500, and each month's expenditure is independently and identically distributed. As a poor college student, you also don't have any income. How much should you have in your bank account if you don't want to go broke this year, with probability at least 95\%?
+  \begin{Answer}
+$\Pr(|X-\mu| \geq \alpha) \leq \frac{\Var{X}}{\alpha^2} \leq 0.05$\\
+$X$ is defined as the expenditure this year. \\
+$\Var{X}=\E(X^2)-\E(X)^2$\\
+$X_i$ is defined as the expenditure on month $i$.\\
+$\Var{X}=\E(\sum_1^{12}X_i^2+\sum_{i \neq j}X_iX_j)-\E(X)^2$\\
+$=\sum_{i=1}^{12}\E(X_i^2)+\sum_{i \neq j}E(X_i)E(X_j)-\E(X)^2$\\
+$\E(X_i^2)=\Var{X_i}+\E(X_i)^2=500^2+1500^2$\\
+$\Var{X}=12(500^2+1500^2)+\sum_{i \neq j}\E(X_i)\E(X_j)-\E(X)^2$\\
+$=12(500^2+1500^2)+(12)(11)(1500^2)-(1500*12)^2$\\
+$\alpha \geq \sqrt{\frac{12*500^}{0.05}} \approx 7745.97$. It'd suffice to keep an extra $7745.97$ in bank account. 
+  \end{Answer}
+  
+  \item As a UC Berkeley CS student, you're always thinking about ways to become the next billionaire in Silicon Valley. After hours of brainstorming, you've finally cut your list of ideas down to 10, all of which you want to implement at the same time. A venture capitalist has agreed to back all 10 ideas, as long as your net return from implementing the ideas is positive with at least 95\% probability.
+  
+  Suppose that implementing an idea requires $50$ thousand dollars, and your start-up then succeeds with probability $p$, generating $150$ thousand dollars in revenue (for a net gain of $100$ thousand dollars), or fails with probability $1 - p$ (for a net loss of $50$ thousand dollars). The success of each idea is independent of every other. What is the condition on $p$ that you need to satisfy to secure the venture capitalist's funding?
+  \begin{Answer}
+Define $X$: total net return and $X_i$: net return on the $i$th idea. Then by Chebyshev's inequality we have $\Pr(|X-\E(X)| \geq \E(X)) \leq \frac{\Var{X}}{\E(X)^2} \leq 0.05$.\\
+$\frac{\Var{X}}{\E(X)^2}=\frac{\E(X^2)-\E(X)^2}{\E(X)^2}=\frac{\E(X^2)}{\E(X)^2}-1 \leq 0.05$\\
+$\E(X)=10(100,000p-50,000(1-p))$\\
+$\E(X^2)=\E((X_1+...+X_n)^2)=90\E(X_1X_2)+10\E(X_1^2)$\\
+$=90(100,000p-50,000(1-p))^2+10(100,000^2p-50,000^2(1-p))$\\
+$\frac{\E(X^2)}{\E(X)^2} \leq 1.05 \Rightarrow \frac{90(100,000p-50,000(1-p))^2+10(100,000^2p-50,000^2(1-p))}{10^2(100,000p+50,000(1-p))^2} \leq 1.05$\\
+$\Rightarrow \frac{9}{10}+\frac{90(100,000p-50,000(1-p))^2+10(100,000^2p+50,000^2(1-p))}{10^2(100,000p-50,000(1-p))^2} \leq 1.05$\\
+$\Rightarrow \frac{(100,000^2p+50,000^2(1-p))}{10(100,000p-50,000(1-p))^2} \leq 0.15$\\
+According to Wolfram Alpha, it would suffice for $p$ to be $0.845$.
+  \end{Answer}
+  
+  \item One of your start-ups uses error-correcting codes, which can recover the original message as long as $1000$ packets are not erased. Each packet gets erased independently with probability $0.8$. How many packets should you send such that you can recover the message with probability at least 99\%?
+  \begin{Answer}
+$X$: Number of packets lost. $n$: Number of packets sent. \\
+$\Pr(n-X<1000)<0.01)$\\
+$\Pr(n-X<1000) \leq \Pr(n-X \leq 1000)$\\
+$=\Pr(X \geq n-1000)$\\
+$\leq \Pr(|X-np| \geq n-1000-np)$\\
+$\leq \frac{\Var{X}}{(n-1000-np)^2} \leq 0.01$\\
+$\frac{np(1-p)}{(n-1000-np)^2}=\frac{0.16n}{(0.2n-1000)^2} \leq 0.01$\\
+According to Wolfram Alpha, it would suffice to send 6629 packets.
+  \end{Answer}
+\end{enumerate}
+
+
+
+\Question{Entropy}
+Let $X_i$, $1 \leq i \leq n$, be a sequence of i.i.d.\ Bernoulli random variables with parameter $p$, i.e.\ $\Pr(X_i = 1) = p$ and $\Pr(X_i = 0) = 1-p$.
+\begin{enumerate}[(a)]
+  \item Express $\Pr(X_1 = x_1, X_2 = x_2, \dots, X_n = x_n)$ in terms of $p$ and $n_0$, where $x_i \in \{0,1 \}$ for all $1 \leq i \leq n$ and $n_0$ depends on ($x_1 \dots x_n$) and represents the number of 1's in ($x_1 \dots x_n$). Call this result $f(x_1, x_2, \dots, x_n)$.
+  \begin{Answer}
+$f(x_1,...x_n)=p^{n_0}(1-p)^{n-n_0}$
+  \end{Answer}
+
+  \item Define the random variable $Y_n$ as $Y_n = - n^{-1} \log f(X_1,X_2,\dots,X_n)$. What does $Y_n$ tend to as $n$ grows large?
+  \begin{Answer}
+$Y_n=-n^{-1}\log(p^{n_0}(1-p)^{n-n_0})$\\
+$=\frac{\log((1-p)^n(\frac{p}{1-p})^{n_0})}{-n}$\\
+$=\frac{\log((1-p)^n)+\log((\frac{p}{1-p})^{n_0})}{-n}$\\
+$=\frac{\log((1-p)^n)}{-n}+\frac{\log((\frac{p}{1-p})^{n_0})}{-n}$\\
+$=\log((1-p)^{-1})+\frac{\log((\frac{p}{1-p})^{n_0})}{-n}$\\
+$=\log(1)-\log(1-p)+\frac{\log((\frac{p}{1-p})^{n_0})}{-n}$\\
+$=-\log(1-p)$ as $n$ grows large.
+
+  \end{Answer}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%% QUESTIONS END HERE
+
+\end{document}
